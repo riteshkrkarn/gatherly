@@ -7,6 +7,8 @@ export interface User extends Document {
   role: "attendee" | "organizer";
   avatar: string;
   password: string;
+  verifyCode: string;
+  verifyCodeExpiry: Date;
   createdAt?: Date;
 }
 
@@ -26,11 +28,12 @@ const UserSchema: Schema<User> = new Schema(
     username: {
       type: String,
       required: true,
+      trim: true,
       unique: true,
     },
     role: {
       type: String,
-      enum: ["attendee", "organizer"],
+      enum: ["Attendee", "Organizer"],
       default: "attendee",
       required: true,
     },
@@ -40,7 +43,18 @@ const UserSchema: Schema<User> = new Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: [true, "Password is required."],
+    },
+    verifyCode: {
+      types: String,
+      required: [true, "Verify code is required"],
+    },
+    verifyCodeExpiry: {
+      type: Date,
+      requited: [true, "Verify code expiry is required"]
+    },
+    createdAt: {
+      type: Date,
     },
   },
   {
@@ -48,6 +62,6 @@ const UserSchema: Schema<User> = new Schema(
   }
 );
 
-const UserModel = mongoose.model<User>("User", UserSchema);
+const UserModel = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>("User", UserSchema);
 
 export default UserModel;

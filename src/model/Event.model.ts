@@ -4,6 +4,7 @@ export interface Event extends Document {
   organizer: Types.ObjectId;
   name: string;
   description: string;
+  category: string;
   location: string;
   imageUrl: string;
   dateCreated: Date;
@@ -24,6 +25,10 @@ const EventSchema: Schema<Event> = new Schema(
       required: true,
     },
     description: {
+      type: String,
+      required: true,
+    },
+    category: {
       type: String,
       required: true,
     },
