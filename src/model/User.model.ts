@@ -1,14 +1,16 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { boolean } from "zod/v4";
 
 export interface User extends Document {
   name: string;
   email: string;
-  username: string;
-  role: "attendee" | "organizer";
+  userName: string;
+  isOrganizer: boolean;
   avatar: string;
   password: string;
   verifyCode: string;
   verifyCodeExpiry: Date;
+  isVerified: boolean;
   createdAt?: Date;
 }
 
@@ -25,17 +27,15 @@ const UserSchema: Schema<User> = new Schema(
       unique: true,
       lowercase: true,
     },
-    username: {
+    userName: {
       type: String,
       required: true,
       trim: true,
       unique: true,
     },
-    role: {
-      type: String,
-      enum: ["Attendee", "Organizer"],
-      default: "attendee",
-      required: true,
+    isOrganizer: {
+      type: Boolean,
+      deafult: false,
     },
     avatar: {
       type: String,
@@ -51,7 +51,11 @@ const UserSchema: Schema<User> = new Schema(
     },
     verifyCodeExpiry: {
       type: Date,
-      requited: [true, "Verify code expiry is required"]
+      required: [true, "Verify code expiry is required"],
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
     },
     createdAt: {
       type: Date,
@@ -62,6 +66,8 @@ const UserSchema: Schema<User> = new Schema(
   }
 );
 
-const UserModel = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>("User", UserSchema);
+const UserModel =
+  (mongoose.models.User as mongoose.Model<User>) ||
+  mongoose.model<User>("User", UserSchema);
 
 export default UserModel;
