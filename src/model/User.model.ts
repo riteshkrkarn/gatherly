@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { boolean } from "zod/v4";
 
 export interface User extends Document {
   name: string;

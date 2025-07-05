@@ -1,9 +1,9 @@
 import dbConnect from "@/lib/dbConnect";
 import bcrypt from "bcryptjs";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
-import { success } from "zod/v4";
+// import { success } from "zod/v4";
 import UserModel from "@/model/User.model";
-import { TURBOPACK_CLIENT_MIDDLEWARE_MANIFEST } from "next/dist/shared/lib/constants";
+// import { TURBOPACK_CLIENT_MIDDLEWARE_MANIFEST } from "next/dist/shared/lib/constants";
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -91,8 +91,8 @@ export async function POST(request: Request) {
         status: 201,
       }
     );
-  } catch (error) {
-    console.log("Error registering user.");
+  } catch (error: any) {
+    throw new Error(error.message || "Error registering user.");
     return Response.json(
       {
         success: false,
