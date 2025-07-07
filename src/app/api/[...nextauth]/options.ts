@@ -1,7 +1,5 @@
 import { NextAuthOptions } from "next-auth";
 import { CredentialsProvider } from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
-import GitHubProvider from "next-auth/providers/github";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User.model";
@@ -43,6 +41,25 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async session({ session, token }) {
+      if (token) {
+        session.user._id = token._id;
+        session.user.isOrganizer = token.isOrganizer;
+        session.user.userName = token.username;
+      }
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token._id = user._id?.toString();
+        token.isOrganizer = user.isOrganizer;
+        token.username = user.userName;
+      }
+
+      return token;
+    },
+  },
   pages: {
     signIn: "/sign-in",
   },
