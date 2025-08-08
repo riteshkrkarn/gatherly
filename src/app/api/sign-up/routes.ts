@@ -91,16 +91,9 @@ export async function POST(request: Request) {
         status: 201,
       }
     );
-  } catch (error: any) {
-    throw new Error(error.message || "Error registering user.");
-    return Response.json(
-      {
-        success: false,
-        message: "Error registering user.",
-      },
-      {
-        status: 500,
-      }
-    );
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Error registering user.";
+    throw new Error(errorMessage);
   }
 }

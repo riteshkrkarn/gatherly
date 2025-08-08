@@ -1,5 +1,5 @@
 import { NextAuthOptions } from "next-auth";
-import { CredentialsProvider } from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User.model";
@@ -10,7 +10,7 @@ export const authOptions: NextAuthOptions = {
       id: "credentials",
       name: "Credentials",
       credentials: {
-        email: { label: "Username", type: "text" },
+        identifier: { label: "Email or Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
@@ -19,7 +19,7 @@ export const authOptions: NextAuthOptions = {
           const user = await UserModel.findOne({
             $or: [
               { email: credentials?.identifier },
-              { username: credentials?.identifier },
+              { userName: credentials?.identifier },
             ],
           });
           if (!user) {
@@ -33,10 +33,12 @@ export const authOptions: NextAuthOptions = {
           if (!isPasswordCorrect) {
             throw new Error("Password is incorrect");
           } else {
-            return user;
+            const plainUser = JSON.parse(JSON.stringify(user));
+
+            return plainUser;
           }
-        } catch (err: any) {
-          throw new Error(err);
+        } catch (err: unknown) {
+          throw new Error(err instanceof Error ? err.message : 'An error occurred');
         }
       },
     }),
@@ -46,7 +48,7 @@ export const authOptions: NextAuthOptions = {
       if (token) {
         session.user._id = token._id;
         session.user.isOrganizer = token.isOrganizer;
-        session.user.userName = token.username;
+        session.user.userName = token.userName;
       }
       return session;
     },
@@ -54,7 +56,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token._id = user._id?.toString();
         token.isOrganizer = user.isOrganizer;
-        token.username = user.userName;
+        token.userName = user.userName;
       }
 
       return token;

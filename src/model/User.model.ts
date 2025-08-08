@@ -34,7 +34,7 @@ const UserSchema: Schema<User> = new Schema(
     },
     isOrganizer: {
       type: Boolean,
-      deafult: false,
+      default: false,
     },
     avatar: {
       type: String,
@@ -45,7 +45,7 @@ const UserSchema: Schema<User> = new Schema(
       required: [true, "Password is required."],
     },
     verifyCode: {
-      types: String,
+      type: String,
       required: [true, "Verify code is required"],
     },
     verifyCodeExpiry: {
@@ -58,6 +58,7 @@ const UserSchema: Schema<User> = new Schema(
     },
     createdAt: {
       type: Date,
+      default: Date.now,
     },
   },
   {
