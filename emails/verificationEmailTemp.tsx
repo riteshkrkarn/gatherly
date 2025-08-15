@@ -15,11 +15,11 @@ import {
 
 interface VerificationEmailProps {
   otp: string;
-  userName?: string;
+  username?: string;
 }
 
 const VerificationEmail: React.FC<VerificationEmailProps> = ({
-  userName,
+  username,
   otp,
 }) => {
   return (
@@ -83,7 +83,7 @@ const VerificationEmail: React.FC<VerificationEmailProps> = ({
                   margin: "0",
                 }}
               >
-                {userName ? `Hello ${userName},` : "Hello,"}
+                {username ? `Hello ${username},` : "Hello,"}
               </Text>
               <Text
                 style={{
@@ -180,7 +180,7 @@ const VerificationEmail: React.FC<VerificationEmailProps> = ({
                   margin: "0",
                 }}
               >
-                • If you didn't request this code, please ignore this email
+                • If you did not request this code, please ignore this email
               </Text>
             </Section>
 

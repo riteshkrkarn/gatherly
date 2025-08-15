@@ -3,8 +3,8 @@ import mongoose, { Schema, Document } from "mongoose";
 export interface User extends Document {
   name: string;
   email: string;
-  userName: string;
-  isOrganizer: boolean;
+  username: string;
+  isOrganizer: string;
   avatar: string;
   password: string;
   verifyCode: string;
@@ -26,15 +26,15 @@ const UserSchema: Schema<User> = new Schema(
       unique: true,
       lowercase: true,
     },
-    userName: {
+    username: {
       type: String,
       required: true,
       trim: true,
       unique: true,
     },
     isOrganizer: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "",
     },
     avatar: {
       type: String,

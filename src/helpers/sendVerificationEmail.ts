@@ -6,12 +6,12 @@ import React from "react";
 
 export async function sendVerificationEmail(
   email: string,
-  userName: string,
+  username: string,
   verifyCode: string
 ): Promise<ApiResponse> {
   try {
     const html = await render(
-      React.createElement(VerificationEmail, { userName, otp: verifyCode })
+      React.createElement(VerificationEmail, { username, otp: verifyCode })
     );
 
     const { data, error } = await resend.emails.send({

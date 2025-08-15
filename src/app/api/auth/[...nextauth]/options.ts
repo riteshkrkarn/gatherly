@@ -10,7 +10,11 @@ export const authOptions: NextAuthOptions = {
       id: "credentials",
       name: "Credentials",
       credentials: {
-        identifier: { label: "Email or Username", type: "text" },
+        identifier: {
+          label: "Email or Username",
+          type: "text",
+          placeholder: "ramanujan or ramanujan@gmailcom",
+        },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
@@ -19,7 +23,7 @@ export const authOptions: NextAuthOptions = {
           const user = await UserModel.findOne({
             $or: [
               { email: credentials?.identifier },
-              { userName: credentials?.identifier },
+              { username: credentials?.identifier },
             ],
           });
           if (!user) {
@@ -38,7 +42,9 @@ export const authOptions: NextAuthOptions = {
             return plainUser;
           }
         } catch (err: unknown) {
-          throw new Error(err instanceof Error ? err.message : 'An error occurred');
+          throw new Error(
+            err instanceof Error ? err.message : "An error occurred"
+          );
         }
       },
     }),
@@ -48,7 +54,7 @@ export const authOptions: NextAuthOptions = {
       if (token) {
         session.user._id = token._id;
         session.user.isOrganizer = token.isOrganizer;
-        session.user.userName = token.userName;
+        session.user.username = token.username;
       }
       return session;
     },
@@ -56,7 +62,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token._id = user._id?.toString();
         token.isOrganizer = user.isOrganizer;
-        token.userName = user.userName;
+        token.username = user.username;
       }
 
       return token;
