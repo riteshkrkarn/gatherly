@@ -2,8 +2,7 @@
 
 <div align="center">
   <img src="https://img.shields.io/badge/Status-In%20Development-yellow?style=for-the-badge" alt="Status" />
-  <img src="https://img.shields.io/badge/Type-Portfolio%20Project-blue?style=for-the-badge" alt="Type" />
-  <img src="https://img.shields.io/badge/Learning-TypeScript-green?style=for-the-badge" alt="Learning" />
+  
 </div>
 
 <div align="center">
@@ -60,45 +59,63 @@
 
 #### **Database Models & Schemas**
 
-- **User Model**: Complete with authentication fields, role-based access, and email verification
-- **Event Model**: Full event structure with organizer relations, ticket types, and validation
+- **User Model**: Complete with authentication, role-based access, email verification
+- **Event Model**: Full structure with organizer relations, ticket types, status management
 - **Booking Model**: Transaction tracking with user-event relationships
 - **Database Connection**: MongoDB Atlas integration with Mongoose ODM
 
+#### **Authentication System**
+
+- **NextAuth.js Integration**: Credentials provider setup
+- **Password Security**: bcrypt encryption and validation
+- **Email Verification**: OTP-based account verification system
+- **User Registration**: Complete signup flow with validation
+
+#### **API Routes**
+
+- **Auth Endpoints**: Sign-up, verification, username validation
+- **Event Registration**: Event creation API endpoint
+- **Database Health**: Connection testing and error handling
+
+#### **Frontend Components**
+
+- **Homepage**: Responsive landing page with hero section
+- **Auth Forms**: Sign-in, sign-up, and OTP verification forms
+- **UI Components**: shadcn/ui integration with custom styling
+- **Navigation**: Responsive navbar component
+
 #### **Data Validation**
 
-- **Zod Schemas**: Comprehensive validation for user signup and event creation
-- **Input Sanitization**: Username, email, and password validation with regex patterns
-- **Cross-field Validation**: Date relationships and business logic validation
+- **Zod Schemas**: Comprehensive validation for all forms and API endpoints
+- **Type Safety**: Full TypeScript implementation across components
+- **Input Sanitization**: Username, email, password validation with regex patterns
 
-#### **Project Structure**
+#### **Project Infrastructure**
 
-- **Next.js 14 App Router**: Modern routing structure with TypeScript
-- **Organized Architecture**: Separate models, schemas, and utility functions
-- **Type Safety**: Full TypeScript implementation across all components
+- **Next.js 14 App Router**: Modern routing with TypeScript
+- **Middleware**: Authentication routing and protection
+- **Constants Management**: Centralized event status and category constants
 
 ### 🔄 In Progress
 
-- **Authentication System**: NextAuth.js integration and user management
-- **Frontend Components**: shadcn/ui component library setup
-- **API Routes**: RESTful endpoints for CRUD operations
+- **Payment Integration**: Stripe setup for ticket purchases
+- **Event Management**: Complete CRUD operations for events
+- **User Dashboard**: Profile management and booking history
 
 ### 📋 Planned Features
 
-- **User Interface**: Complete event browsing and booking interface
-- **Payment Integration**: Stripe/PayPal for secure transactions
+- **Event Discovery**: Search and filtering functionality
 - **File Upload**: Cloudinary integration for event images
-- **Email System**: Verification and notification emails
-- **Search & Filtering**: Advanced event discovery features
-- **Dashboard**: User and organizer management panels
+- **Email Notifications**: Booking confirmations and updates
+- **Analytics Dashboard**: Event organizer insights
 
 ### 📊 Project Progress
 
-- **Backend Architecture**: 70% Complete
-- **Database Design**: 90% Complete
-- **Authentication**: 30% Complete
-- **Frontend**: 10% Complete
-- **Testing**: 5% Complete
+- **Backend Architecture**: 85% Complete
+- **Database Design**: 95% Complete
+- **Authentication**: 80% Complete
+- **Frontend**: 35% Complete
+- **API Routes**: 60% Complete
 
 ---
 
@@ -142,7 +159,12 @@
 
 ## 📱 Screenshots
 
-_Screenshots will be added as the project progresses_
+### 🏠 Homepage
+
+<div align="center">
+  <img src="./public/homepage.png" alt="Gatherly Homepage" width="800" />
+  <p><em>Modern landing page with hero section and responsive design</em></p>
+</div>
 
 ---
 
@@ -244,28 +266,10 @@ gatherly/
 
 - `POST /api/auth/signup` - User registration
 - `POST /api/auth/signin` - User login
-- `POST /api/auth/verify` - Email verification
 
 ### Events
 
 - `GET /api/events` - Get all events
-- `GET /api/events/[id]` - Get event by ID
-- `POST /api/events` - Create new event (organizers only)
-- `PUT /api/events/[id]` - Update event (organizers only)
-- `DELETE /api/events/[id]` - Delete event (organizers only)
-
-### Bookings
-
-- `POST /api/bookings` - Create booking
-- `GET /api/bookings/user` - Get user bookings
-- `GET /api/bookings/event/[id]` - Get event bookings
-
-### Users
-
-- `GET /api/users/profile` - Get user profile
-- `PUT /api/users/profile` - Update user profile
-
----
 
 ## 🌐 Real-World Usage
 

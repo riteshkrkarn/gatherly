@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
+import { EVENT_STATUSES, type EventStatus } from "@/constants/eventConstants";
 
 export interface Event extends Document {
   organizer: Types.ObjectId;
@@ -10,7 +11,8 @@ export interface Event extends Document {
   dateCreated: Date;
   dateStarted: Date;
   dateEnded: Date;
-  ticketTypes: [{ name: string; price: number; quantity: number }];
+  status: EventStatus;
+  ticketTypes: { name: string; price: number; quantity: number }[];
 }
 
 const EventSchema: Schema<Event> = new Schema(
@@ -51,6 +53,11 @@ const EventSchema: Schema<Event> = new Schema(
     dateEnded: {
       type: Date,
       required: true,
+    },
+    status: {
+      type: String,
+      enum: EVENT_STATUSES,
+      default: "open",
     },
     ticketTypes: [
       {

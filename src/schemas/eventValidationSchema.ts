@@ -1,3 +1,4 @@
+import { EVENT_STATUSES } from "@/constants/eventConstants";
 import { z } from "zod";
 
 export const ticketTypeValidationSchema = z.object({
@@ -19,6 +20,7 @@ export const eventValidationSchema = z
     dateCreated: z.date(),
     dateStarted: z.date(),
     dateEnded: z.date(),
+    status: z.enum(EVENT_STATUSES),
     ticketTypes: z
       .array(ticketTypeValidationSchema)
       .min(1, "There must be a single type ticket.")
