@@ -9,9 +9,8 @@ export const usernameValidation = z
     "Username must not contain any special character."
   );
 
-export const signUpSchema = z.object({
-  username: usernameValidation,
-  email: z.string().email({ message: "Invalid email address" }),
+export const signInSchema = z.object({
+  identifier: z.string().email({ message: "Invalid email address" }),
   password: z
     .string()
     .min(6, { message: "Password must me atleast 6 characters" }),

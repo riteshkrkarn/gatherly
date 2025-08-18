@@ -1,6 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import "./globals.css";
+import AuthProvider from "@/components/providers/auth-provider";
 
 export const metadata: Metadata = {
   title: "Gatherly - Event Ticketing Platform",
@@ -14,7 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body suppressContentEditableWarning={true}>{children}</body>
+      <body suppressContentEditableWarning={true}>
+        <AuthProvider> {children}</AuthProvider>
+      </body>
     </html>
   );
 }

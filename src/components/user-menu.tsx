@@ -1,0 +1,73 @@
+import { LogOutIcon } from "lucide-react";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { UserRound, Settings, BookCheck } from "lucide-react";
+
+import { Link } from "next/link";
+import { useSession, signOut } from "next-auth/react";
+import { User } from "next-auth";
+
+export default function UserMenu() {
+  const { data: session } = useSession();
+  const user: User = session?.user;
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
+          <Avatar>
+            <AvatarImage src="./avatar.jpg" alt="Profile image" />
+            <AvatarFallback>KK</AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent className="max-w-64" align="end">
+        <DropdownMenuLabel className="flex min-w-0 flex-col">
+          <span className="text-foreground truncate text-sm font-medium">
+            {user?.name || "Name"}
+          </span>
+          <span className="text-muted-foreground truncate text-xs font-normal">
+            {user?.username || "username"}
+          </span>
+        </DropdownMenuLabel>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <UserRound className="size-4 opacity-60" />
+            <span>Profile</span>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem>
+            <BookCheck className="size-4 opacity-60" />
+            <span>My Bookings</span>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem>
+            <Settings className="size-4 opacity-60" />
+            <span>Settings</span>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem onClick={() => signOut()}>
+          <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
+          <span>Logout</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}

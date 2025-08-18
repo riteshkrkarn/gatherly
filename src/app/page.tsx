@@ -21,9 +21,9 @@ export default function Home() {
             Bored every weekend? Find your scene.
           </h1>
           <p className="text-lg lg:text-2xl text-white sm:text-lg leading-relaxed bg-black/20 backdrop-blur-sm lg:text-black lg:bg-transparent lg:backdrop-blur-none p-6 rounded-lg max-w-xl text-left ">
-            Life's best moments happen when we come together. Discover events
-            that inspire you, connect with people who share your passions, and
-            make every day an opportunity for something amazing.
+            Life&apos;s best moments happen when we come together. Discover
+            events that inspire you, connect with people who share your
+            passions, and make every day an opportunity for something amazing.
           </p>
         </div>
       </div>
