@@ -2,7 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User.model";
 import { z } from "zod";
 import { usernameValidation } from "@/schemas/signupValidationSchema";
-import { createApiResponse } from "@/types/ApiResponse";
+import { NextResponse } from "next/server";
 
 const verifyCodeSchema = z.object({
   username: usernameValidation,
@@ -17,18 +17,20 @@ export async function POST(request: Request) {
 
     const result = verifyCodeSchema.safeParse({ username, code });
     if (!result.success) {
-      return createApiResponse(
-        false,
-        "Invalid username or verification code format",
-        400
-      );
+      return NextResponse.json(
+        { success: false, message: result.error.message },
+        { status: 400 }
+      )
     }
 
     const decodedUsername = decodeURIComponent(result.data.username);
 
     const user = await UserModel.findOne({ username: decodedUsername });
     if (!user) {
-      return createApiResponse(false, "User not found", 404);
+      return NextResponse.json(
+        { success: false, message: "User not found" },
+        { status: 404 }
+      );
     }
 
     const isCodeValid = user.verifyCode === code;
@@ -37,19 +39,23 @@ export async function POST(request: Request) {
     if (isCodeNotExpired && isCodeValid) {
       user.isVerified = true;
       await user.save();
-      return createApiResponse(true, "Verification successful", 200);
+      return NextResponse.json({ success: true, message: "User verified" }, {status: 200});
     } else if (!isCodeNotExpired) {
-      return createApiResponse(false, "Verification code has expired", 400);
+      return NextResponse.json(
+        { success: false, message: "Verification code has expired" },
+        { status: 400 }
+      );
     } else {
-      return createApiResponse(false, "Invalid verification code", 400);
+      return NextResponse.json(
+        { success: false, message: "Invalid verification code" },
+        { status: 400 }
+      );
     }
   } catch (error) {
     console.log("Error verifying otp");
-    return Response.json(
-      { success: false, message: error || "Error verifying otp" },
-      {
-        status: 500,
-      }
-    );
+    return NextResponse.json(
+      { success: false, message: "An error occurred" },
+      { status: 500 }
+    )
   }
 }

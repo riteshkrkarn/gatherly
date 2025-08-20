@@ -2,7 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User.model";
 import { z } from "zod";
 import { usernameValidation } from "@/schemas/signupValidationSchema";
-import { createApiResponse } from "@/types/ApiResponse";
+import { NextResponse } from "next/server";
 
 const UsernameQuerySchema = z.object({
   username: usernameValidation,
@@ -21,7 +21,10 @@ export async function GET(request: Request) {
     console.log(result); //TODO
     if (!result.success) {
       const usernameErrors = result.error.format().username?._errors || [];
-      return createApiResponse(false, "" + usernameErrors.join(", "), 400);
+      return NextResponse.json(
+        { success: false, errors: usernameErrors },
+        { status: 400 }
+      );
     }
 
     const { username } = result.data;
@@ -31,17 +34,21 @@ export async function GET(request: Request) {
       isVerified: true,
     });
     if (existingVerifiedUser) {
-      return createApiResponse(false, "Username is already taken", 400);
+      return NextResponse.json(
+        { success: false, message: "Username is already taken" },
+        { status: 400 }
+      );
     }
 
-    return createApiResponse(true, "Username is available", 200);
+    return NextResponse.json(
+      { success: true, message: "Username is available" },
+      { status: 200 }
+    );
   } catch (error) {
     console.log("Error checking username uniqueness.");
-    return Response.json(
-      { success: false, message: "Error checking username uniqueness." },
-      {
-        status: 500,
-      }
+    return NextResponse.json(
+      { success: false, message: "An error occurred" },
+      { status: 500 }
     );
   }
 }

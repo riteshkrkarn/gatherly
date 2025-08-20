@@ -14,7 +14,6 @@ import { useDebounceCallback } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 import { signUpSchema } from "@/schemas/signupValidationSchema";
 import axios, { AxiosError } from "axios";
-import { createApiResponse } from "@/types/ApiResponse";
 import {
   Form,
   FormControl,
@@ -23,6 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { NextResponse } from "next/server";
 
 export default function SignUpForm() {
   const [username, setUsername] = useState("");
@@ -106,17 +106,13 @@ export default function SignUpForm() {
 
       router.replace(`/verify-code/${username}`);
       setIsSubmitting(false);
-      return createApiResponse(true, response.data.message, 200);
+      return NextResponse.json(response.data);
     } catch (error) {
       console.log(error);
 
       const axiosError = error as AxiosError<{ message: string }>;
       setIsSubmitting(false);
-      return createApiResponse(
-        false,
-        axiosError.response?.data?.message || "Error",
-        400
-      );
+      return NextResponse.json(axiosError.response?.data?.message);
     }
   };
 

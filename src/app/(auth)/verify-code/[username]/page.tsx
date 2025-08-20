@@ -6,7 +6,6 @@ import { verifyCodeSchema } from "@/schemas/verifyValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import axios, { AxiosError } from "axios";
-import { createApiResponse } from "@/types/ApiResponse";
 import {
   Form,
   FormControl,
@@ -17,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { NextResponse } from "next/server";
 
 export default function Page() {
   const router = useRouter();
@@ -39,10 +39,9 @@ export default function Page() {
       router.replace(`/sign-in`);
     } catch (error) {
       const axiosError = error as AxiosError;
-      return createApiResponse(
-        false,
-        axiosError.response?.data.message || "Error",
-        400
+      return NextResponse.json(
+        { success: false, message: axiosError.message },
+        { status: 400 }
       );
     }
   };

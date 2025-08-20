@@ -10,8 +10,6 @@ import { ChevronRight, Loader2 } from "lucide-react";
 import { PasswordInput } from "@/components/ui/passwordInput";
 import { useEffect, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
-import axios, { AxiosError } from "axios";
-import { createApiResponse } from "@/types/ApiResponse";
 import {
   Form,
   FormControl,
@@ -22,6 +20,7 @@ import {
 } from "@/components/ui/form";
 import { signIn } from "next-auth/react";
 import { signInSchema } from "@/schemas/loginValidationSchema";
+import { NextResponse } from "next/server";
 
 export default function SinginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -46,7 +45,10 @@ export default function SinginForm() {
 
     if (result?.error) {
       setIsSubmitting(false);
-      return createApiResponse(false, result.error, 400);
+      return NextResponse.json(
+        { success: false, message: result.error },
+        {status: 400}
+      );
     }
     if (result?.url) {
       router.replace(`/dashboard`);

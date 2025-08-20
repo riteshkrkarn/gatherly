@@ -52,6 +52,7 @@ export const authOptions: NextAuthOptions = {
         session.user._id = token._id;
         session.user.isOrganizer = token.isOrganizer;
         session.user.username = token.username;
+        session.user.avatar = token.avatar;
       }
       return session;
     },
@@ -60,6 +61,7 @@ export const authOptions: NextAuthOptions = {
         token._id = user._id?.toString();
         token.isOrganizer = user.isOrganizer;
         token.username = user.username;
+        token.avatar = user.avatar;
       }
 
       return token;

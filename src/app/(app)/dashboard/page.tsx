@@ -37,80 +37,25 @@ interface ApiResponse {
 
 async function getEvents(page: number = 1): Promise<ApiResponse> {
   try {
-    const res = await fetch(`/api/get-events?page=${page}&limit=12`, {
+    const data = await fetch(`/api/get-events?page=${page}&limit=12`, {
       cache: "no-store",
     });
 
-    if (!res.ok) {
-      throw new Error(`Failed to fetch events: ${res.status}`);
+    if (!data.ok) {
+      throw new Error(`Failed to fetch events: ${data.status}`);
     }
 
-    return res.json();
+    return data.json();
   } catch (error) {
     console.error("Error fetching events:", error);
-    // Return mock data as fallback
+    // Return empty data as fallback
     return {
-      events: [
-        {
-          _id: "1",
-          name: "Tech Conference 2024",
-          description:
-            "Join industry leaders for cutting-edge tech insights and networking opportunities.",
-          location: "San Francisco Convention Center",
-          imageUrl: "/images/hero.jpg",
-          date: "Dec 15, 2024",
-        },
-        {
-          _id: "2",
-          name: "Music Festival Downtown",
-          description:
-            "Experience live performances from top artists across multiple genres.",
-          location: "Central Park Amphitheater",
-          imageUrl: "/images/hero.jpg",
-          date: "Dec 20, 2024",
-        },
-        {
-          _id: "3",
-          name: "Food & Wine Expo",
-          description:
-            "Taste exceptional cuisine and discover new wines from local chefs.",
-          location: "Metropolitan Exhibition Hall",
-          imageUrl: "/images/hero.jpg",
-          date: "Dec 18, 2024",
-        },
-        {
-          _id: "4",
-          name: "Digital Marketing Summit",
-          description:
-            "Learn the latest digital marketing strategies from industry experts.",
-          location: "Business Innovation Center",
-          imageUrl: "/images/hero.jpg",
-          date: "Dec 22, 2024",
-        },
-        {
-          _id: "5",
-          name: "Photography Workshop",
-          description:
-            "Master the art of photography with hands-on sessions and expert guidance.",
-          location: "Creative Arts Studio",
-          imageUrl: "/images/hero.jpg",
-          date: "Dec 25, 2024",
-        },
-        {
-          _id: "6",
-          name: "Blockchain & Web3 Meetup",
-          description:
-            "Explore the future of decentralized technologies and network with blockchain enthusiasts.",
-          location: "Tech Hub Downtown",
-          imageUrl: "/images/hero.jpg",
-          date: "Dec 28, 2024",
-        },
-      ],
+      events: [],
       pagination: {
         currentPage: 1,
-        totalPages: 3,
-        totalEvents: 45,
-        hasNextPage: true,
+        totalPages: 0,
+        totalEvents: 0,
+        hasNextPage: false,
         hasPrevPage: false,
       },
     };
@@ -118,77 +63,95 @@ async function getEvents(page: number = 1): Promise<ApiResponse> {
 }
 
 export default async function Dashboard({ searchParams }: PageProps) {
-  const currentPage = parseInt(searchParams.page || "1");
+  const params = await searchParams;
+  const currentPage = parseInt(params.page || "1");
   const { events, pagination } = await getEvents(currentPage);
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <DashboardNavbar />
-      <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-8">Discover Events</h1>
+      <main className="flex-1">
+        <div className="container mx-auto p-4">
+          <h1 className="text-3xl font-bold mb-8">Discover Events</h1>
 
-        {/* Events Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {events.map((event) => (
-            <EventCard
-              key={event._id}
-              id={event._id}
-              name={event.name}
-              description={event.description}
-              location={event.location}
-              imageUrl={event.imageUrl}
-              date={event.date}
-            />
-          ))}
-        </div>
+          {/* Events Grid */}
+          {events.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {events.map((event) => (
+                <EventCard
+                  key={event._id}
+                  id={event._id}
+                  name={event.name}
+                  description={event.description}
+                  location={event.location}
+                  imageUrl={event.imageUrl}
+                  date={event.date}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-16 text-center">
+              <div className="text-6xl mb-4">🎪</div>
+              <h2 className="text-2xl font-semibold text-gray-700 mb-2">
+                No Events Nearby
+              </h2>
+              <p className="text-gray-500 max-w-md">
+                There are no events available in your area at the moment. Check
+                back later or explore events in other locations.
+              </p>
+            </div>
+          )}
 
-        {/* Server-Side Pagination */}
-        <div className="flex justify-center">
-          <Pagination>
-            <PaginationContent>
-              {pagination.hasPrevPage && (
-                <PaginationItem>
-                  <PaginationPrevious
-                    href={`/dashboard?page=${currentPage - 1}`}
-                  />
-                </PaginationItem>
-              )}
-
-              {/* Generate page numbers */}
-              {Array.from({ length: pagination.totalPages }, (_, i) => i + 1)
-                .filter(
-                  (page) =>
-                    page === 1 ||
-                    page === pagination.totalPages ||
-                    Math.abs(page - currentPage) <= 2
-                )
-                .map((page) => (
-                  <PaginationItem key={page}>
-                    <PaginationLink
-                      href={`/dashboard?page=${page}`}
-                      isActive={currentPage === page}
-                    >
-                      {page}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
-
-              {pagination.totalPages > 5 &&
-                currentPage < pagination.totalPages - 2 && (
+          {/* Server-Side Pagination */}
+          <div className="flex justify-center">
+            <Pagination>
+              <PaginationContent>
+                {pagination.hasPrevPage && (
                   <PaginationItem>
-                    <PaginationEllipsis />
+                    <PaginationPrevious
+                      href={`/dashboard?page=${currentPage - 1}`}
+                    />
                   </PaginationItem>
                 )}
 
-              {pagination.hasNextPage && (
-                <PaginationItem>
-                  <PaginationNext href={`/dashboard?page=${currentPage + 1}`} />
-                </PaginationItem>
-              )}
-            </PaginationContent>
-          </Pagination>
+                {/* Generate page numbers */}
+                {Array.from({ length: pagination.totalPages }, (_, i) => i + 1)
+                  .filter(
+                    (page) =>
+                      page === 1 ||
+                      page === pagination.totalPages ||
+                      Math.abs(page - currentPage) <= 2
+                  )
+                  .map((page) => (
+                    <PaginationItem key={page}>
+                      <PaginationLink
+                        href={`/dashboard?page=${page}`}
+                        isActive={currentPage === page}
+                      >
+                        {page}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+
+                {pagination.totalPages > 5 &&
+                  currentPage < pagination.totalPages - 2 && (
+                    <PaginationItem>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                  )}
+
+                {pagination.hasNextPage && (
+                  <PaginationItem>
+                    <PaginationNext
+                      href={`/dashboard?page=${currentPage + 1}`}
+                    />
+                  </PaginationItem>
+                )}
+              </PaginationContent>
+            </Pagination>
+          </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </div>
   );

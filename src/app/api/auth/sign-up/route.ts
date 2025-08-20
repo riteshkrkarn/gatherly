@@ -4,6 +4,7 @@ import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 import UserModel from "@/model/User.model";
 import { upload } from "@/lib/upload";
 import { createApiResponse } from "@/types/ApiResponse";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -32,7 +33,10 @@ export async function POST(request: Request) {
     });
 
     if (existingUserVerifiedByUsername) {
-      return createApiResponse(false, "Username is already taken", 400);
+      return NextResponse.json(
+        { success: false, message: "Username is already taken" },
+        { status: 400 }
+      );
     }
 
     const existingUserByEmail = await UserModel.findOne({ email });
@@ -47,7 +51,10 @@ export async function POST(request: Request) {
         console.log("Avatar uploaded successfully:", avatarUrl);
       } catch (uploadError) {
         console.error("Avatar upload failed:", uploadError);
-        return createApiResponse(false, "Error uploading avatar", 500);
+        return NextResponse.json(
+          { success: false, message: "Avatar upload failed" },
+          { status: 500 }
+        );
       }
     } else {
       console.log("No avatar to upload");
@@ -55,7 +62,10 @@ export async function POST(request: Request) {
 
     if (existingUserByEmail) {
       if (existingUserByEmail.isVerified) {
-        return createApiResponse(false, "User already verified", 400);
+        return NextResponse.json(
+          { success: false, message: "User already verified" },
+          { status: 400 }
+        );
       } else {
         const hashedPassword = await bcrypt.hash(password, 10);
         existingUserByEmail.password = hashedPassword;
@@ -97,10 +107,13 @@ export async function POST(request: Request) {
     );
 
     if (!emailResponse.success) {
-      return createApiResponse(false, "Error sending verification email", 500);
+      return NextResponse.json(
+        { success: false, message: emailResponse.message },
+        { status: 500 }
+      );
     }
 
-    return createApiResponse(true, "User registered successfully", 200);
+    return NextResponse.json(createApiResponse(true, "User registered"));
   } catch (error: unknown) {
     const errorMessage =
       error instanceof Error ? error.message : "Error registering user.";

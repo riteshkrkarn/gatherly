@@ -11,23 +11,29 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { UserRound, Settings, BookCheck, TicketPlus  } from "lucide-react";
-
-import { Link } from "next/link";
+import { UserRound, Settings, BookCheck, TicketPlus } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { User } from "next-auth";
 
 export default function UserMenu() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const user: User = session?.user;
+
+  if(status == "loading") {
+    return <div>Loading...</div>
+  }
+
+  if(!session) {
+    return null;
+  }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
           <Avatar>
-            <AvatarImage src="./avatar.jpg" alt="Profile image" />
-            <AvatarFallback>KK</AvatarFallback>
+            <AvatarImage src={user?.avatar || ""} alt="Profile image" />
+            <AvatarFallback>PP</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -57,7 +63,7 @@ export default function UserMenu() {
 
           {user?.isOrganizer ? (
             <DropdownMenuItem>
-              <TicketPlus  className="size-4 opacity-60" />
+              <TicketPlus className="size-4 opacity-60" />
               <span>Organize Event</span>
             </DropdownMenuItem>
           ) : null}
