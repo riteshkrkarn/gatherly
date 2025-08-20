@@ -18,7 +18,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: "/dashboard", label: "Events", active: true },
@@ -27,9 +26,6 @@ const navigationLinks = [
 ];
 
 export default function DashboardNavbar() {
-
-  
-
   const id = useId();
 
   return (
@@ -96,7 +92,7 @@ export default function DashboardNavbar() {
               href="#"
               className="text-primary hover:text-primary/90 text-xl md:text-2xl font-bold"
             >
-              Gatherly
+              gatherly
             </a>
           </div>
         </div>

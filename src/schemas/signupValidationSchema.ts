@@ -14,7 +14,7 @@ export const signUpSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
   username: usernameValidation,
   isOrganizer: z.boolean(),
-  avataar: z.string().url(),
+  avatar: z.instanceof(File).optional(),
   password: z
     .string()
     .min(6, { message: "Password must me atleast 6 characters" }),

@@ -42,6 +42,7 @@ export default function SignUpForm() {
       email: "",
       username: "",
       isOrganizer: false,
+      avatar: undefined,
       password: "",
     },
   });
@@ -58,9 +59,9 @@ export default function SignUpForm() {
           );
           setUsernameMessage(response.data.message);
         } catch (error) {
-          const axiosError = error as AxiosError;
+          const axiosError = error as AxiosError<{ message: string }>;
           setUsernameMessage(
-            axiosError.response?.data.message ?? "Error checking username"
+            axiosError.response?.data?.message ?? "Error checking username"
           );
         } finally {
           setIsCheckingUsername(false);
@@ -75,7 +76,33 @@ export default function SignUpForm() {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post("/api/auth/sign-up", data);
+      // Create FormData to handle file upload
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("username", data.username);
+      formData.append("isOrganizer", data.isOrganizer.toString());
+      formData.append("password", data.password);
+
+      // Append avatar file if present
+      if (data.avatar) {
+        console.log("Appending avatar file:", {
+          name: data.avatar.name,
+          size: data.avatar.size,
+          type: data.avatar.type,
+        });
+        formData.append("avatar", data.avatar);
+      } else {
+        console.log("No avatar file to append");
+      }
+
+      console.log("FormData entries:", Array.from(formData.entries()));
+
+      const response = await axios.post("/api/auth/sign-up", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       router.replace(`/verify-code/${username}`);
       setIsSubmitting(false);
@@ -83,11 +110,11 @@ export default function SignUpForm() {
     } catch (error) {
       console.log(error);
 
-      const axiosError = error as AxiosError;
+      const axiosError = error as AxiosError<{ message: string }>;
       setIsSubmitting(false);
       return createApiResponse(
         false,
-        axiosError.response?.data.message || "Error",
+        axiosError.response?.data?.message || "Error",
         400
       );
     }
@@ -137,7 +164,7 @@ export default function SignUpForm() {
                   <p
                     className={`text-sm ${usernameMessage === "Username is available" ? "text-green-500" : "text-red-500"}`}
                   >
-                    test{usernameMessage}
+                    {usernameMessage}
                   </p>
                   <FormMessage />
                 </FormItem>
@@ -178,12 +205,20 @@ export default function SignUpForm() {
 
             <FormField
               control={form.control}
-              name="avataar"
-              render={({ field }) => (
+              name="avatar"
+              render={({ field: { onChange, value, ...field } }) => (
                 <FormItem>
-                  <FormLabel>Avataar</FormLabel>
+                  <FormLabel>Avatar</FormLabel>
                   <FormControl>
-                    <Input placeholder="Avataar" type="file" {...field} />
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        onChange(file || undefined);
+                      }}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

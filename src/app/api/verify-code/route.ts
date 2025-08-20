@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User.model";
 import { z } from "zod";
-import { usernameValidation } from "@/schemas/loginValidationSchema";
+import { usernameValidation } from "@/schemas/signupValidationSchema";
 import { createApiResponse } from "@/types/ApiResponse";
 
 const verifyCodeSchema = z.object({
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
 
     const decodedUsername = decodeURIComponent(result.data.username);
 
-    const user = await UserModel.findOne({ decodedUsername });
+    const user = await UserModel.findOne({ username: decodedUsername });
     if (!user) {
       return createApiResponse(false, "User not found", 404);
     }
@@ -34,9 +34,9 @@ export async function POST(request: Request) {
     const isCodeValid = user.verifyCode === code;
     const isCodeNotExpired = new Date(user.verifyCodeExpiry) > new Date();
 
-    if (isCodeNotExpired || isCodeValid) {
+    if (isCodeNotExpired && isCodeValid) {
       user.isVerified = true;
-      user.save();
+      await user.save();
       return createApiResponse(true, "Verification successful", 200);
     } else if (!isCodeNotExpired) {
       return createApiResponse(false, "Verification code has expired", 400);

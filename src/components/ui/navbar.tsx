@@ -84,7 +84,7 @@ export default function Navbar() {
               href="#"
               className="text-primary hover:text-primary/90 font-bold text-2xl"
             >
-              Gatherly
+              gatherly
             </a>
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">

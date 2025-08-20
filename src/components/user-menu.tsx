@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { UserRound, Settings, BookCheck } from "lucide-react";
+import { UserRound, Settings, BookCheck, TicketPlus  } from "lucide-react";
 
 import { Link } from "next/link";
 import { useSession, signOut } from "next-auth/react";
@@ -54,6 +54,13 @@ export default function UserMenu() {
             <BookCheck className="size-4 opacity-60" />
             <span>My Bookings</span>
           </DropdownMenuItem>
+
+          {user?.isOrganizer ? (
+            <DropdownMenuItem>
+              <TicketPlus  className="size-4 opacity-60" />
+              <span>Organize Event</span>
+            </DropdownMenuItem>
+          ) : null}
 
           <DropdownMenuItem>
             <Settings className="size-4 opacity-60" />
