@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 import UserModel from "@/model/User.model";
 import { upload } from "@/lib/upload";
-import { createApiResponse } from "@/types/ApiResponse";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -113,7 +112,7 @@ export async function POST(request: Request) {
       );
     }
 
-    return NextResponse.json(createApiResponse(true, "User registered"));
+    return NextResponse.json({ success: true, message: "User registered" }, { status: 200 });
   } catch (error: unknown) {
     const errorMessage =
       error instanceof Error ? error.message : "Error registering user.";
