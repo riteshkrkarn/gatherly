@@ -4,7 +4,7 @@ import { upload } from "@/lib/upload";
 import { NextResponse } from "next/server";
 import { User } from "next-auth";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/options";
+import { authOptions } from "../[...nextauth]/options";
 
 export async function POST(request: Request) {
   await dbConnect();

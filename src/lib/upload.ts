@@ -1,4 +1,3 @@
-
 import { supabaseAdmin } from "@/lib/supabase";
 
 export async function upload(file: File): Promise<string> {
@@ -21,7 +20,9 @@ export async function upload(file: File): Promise<string> {
     }
 
     // Get public URL using admin client
-    const { data } = supabaseAdmin.storage.from("uplaods").getPublicUrl(fileName);
+    const { data } = supabaseAdmin.storage
+      .from("uploads")
+      .getPublicUrl(fileName);
 
     return data.publicUrl;
   } catch (error) {

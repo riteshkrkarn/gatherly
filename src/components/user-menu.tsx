@@ -1,4 +1,5 @@
 import { LogOutIcon } from "lucide-react";
+import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -19,13 +20,15 @@ export default function UserMenu() {
   const { data: session, status } = useSession();
   const user: User = session?.user;
 
-  if(status == "loading") {
-    return <div>Loading...</div>
+  if (status == "loading") {
+    return <div>Loading...</div>;
   }
 
-  if(!session) {
+  if (!session) {
     return null;
   }
+
+  console.log(user.avatar);
 
   return (
     <DropdownMenu>
@@ -33,6 +36,7 @@ export default function UserMenu() {
         <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
           <Avatar>
             <AvatarImage src={user?.avatar || ""} alt="Profile image" />
+
             <AvatarFallback>PP</AvatarFallback>
           </Avatar>
         </Button>
@@ -51,9 +55,11 @@ export default function UserMenu() {
         <DropdownMenuSeparator />
 
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <UserRound className="size-4 opacity-60" />
-            <span>Profile</span>
+          <DropdownMenuItem asChild>
+            <Link href="/profile-page">
+              <UserRound className="size-4 opacity-60" />
+              <span>Profile</span>
+            </Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem>
