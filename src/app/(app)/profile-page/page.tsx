@@ -2,12 +2,12 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Edit } from "lucide-react";
 import DashboardNavbar from "@/components/ui/dashboard-navbar";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Footer from "@/components/ui/footer";
 
 type UserProfile = {
   name: string;
@@ -36,7 +36,6 @@ export default function Page() {
         ) {
           router.replace("/sign-in");
         } else {
-          // Optionally handle other errors
           console.error(err);
         }
       });
@@ -47,10 +46,12 @@ export default function Page() {
       <DashboardNavbar />
       <main className="flex-1">
         <div className="container mx-auto p-4 flex flex-col">
-          {/* Profile heading always at the top */}
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-3xl font-bold">Profile</h1>
-            <Button variant="outline">
+            <Button
+              variant="outline"
+              onClick={() => router.push("/update-user")}
+            >
               <Edit className="mr-2 h-4 w-4" />
               Edit
             </Button>
@@ -108,6 +109,7 @@ export default function Page() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

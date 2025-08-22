@@ -47,7 +47,7 @@ export default function SinginForm() {
       setIsSubmitting(false);
       return NextResponse.json(
         { success: false, message: result.error },
-        {status: 400}
+        { status: 400 }
       );
     }
     if (result?.url) {
@@ -94,15 +94,17 @@ export default function SinginForm() {
               )}
             />
 
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                </>
-              ) : (
-                "Sign In"
-              )}
-            </Button>
+            <div className="flex justify-center">
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  </>
+                ) : (
+                  "Sign In"
+                )}
+              </Button>
+            </div>
           </form>
         </Form>
         <div className="text-center mt-4">

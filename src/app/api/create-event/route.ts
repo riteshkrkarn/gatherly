@@ -4,7 +4,7 @@ import { upload } from "@/lib/upload";
 import { NextResponse } from "next/server";
 import { User } from "next-auth";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../[...nextauth]/options";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -24,17 +24,18 @@ export async function POST(request: Request) {
     const formData = await request.formData();
 
     const name = formData.get("name") as string;
+    const tagline = formData.get("tagline") as string;
     const description = formData.get("description") as string;
     const category = formData.get("category") as string;
     const location = formData.get("location") as string;
     const dateStarted = new Date(formData.get("dateStarted") as string);
     const dateEnded = new Date(formData.get("dateEnded") as string);
     const imageFile = formData.get("image") as File | null;
-    
+
     // Parse ticket types from FormData
     const ticketTypesData = formData.get("ticketTypes") as string;
     let ticketTypes = [];
-    
+
     if (ticketTypesData) {
       try {
         ticketTypes = JSON.parse(ticketTypesData);
@@ -59,10 +60,10 @@ export async function POST(request: Request) {
       );
     }
 
-    let imageUrl = "";
+    let imageURL = "";
     if (imageFile && imageFile.size > 0) {
       try {
-        imageUrl = await upload(imageFile);
+        imageURL = await upload(imageFile);
       } catch (uploadError) {
         console.error("Image upload failed:", uploadError);
         return NextResponse.json(
@@ -85,12 +86,13 @@ export async function POST(request: Request) {
     const newEvent = new EventModel({
       organizer: user._id,
       name,
+      tagline,
       description,
       category,
       location,
       dateStarted,
       dateEnded,
-      imageUrl: imageUrl,
+      image: imageURL,
       status: eventStatus,
       ticketTypes: ticketTypes,
       dateCreated: new Date(),

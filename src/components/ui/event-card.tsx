@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,18 +14,18 @@ import { MapPinIcon, CalendarIcon } from "lucide-react";
 interface EventCardProps {
   id: string;
   name: string;
-  description: string;
+  tagline: string;
   location: string;
-  imageUrl: string;
+  image: string;
   date?: string;
 }
 
 export default function EventCard({
   id,
   name,
-  description,
+  tagline,
   location,
-  imageUrl,
+  image,
   date = "Dec 15, 2024",
 }: EventCardProps) {
   return (
@@ -32,7 +33,7 @@ export default function EventCard({
       <div className="p-2">
         <div className="relative h-48 w-full rounded-lg overflow-hidden">
           <Image
-            src={imageUrl}
+            src={image}
             alt={name}
             fill
             className="object-cover"
@@ -46,7 +47,7 @@ export default function EventCard({
           {name}
         </CardTitle>
         <CardDescription className="line-clamp-2 text-sm text-muted-foreground">
-          {description}
+          {tagline}
         </CardDescription>
       </CardHeader>
 
@@ -64,8 +65,13 @@ export default function EventCard({
         </div>
       </CardContent>
 
-      <CardFooter>
-        <Button className="w-full">Book Now</Button>
+      <CardFooter className="flex gap-2">
+        <Button className="flex-1">Book Now</Button>
+        <Link href={`/events/${id}`}>
+          <Button variant="outline" className="flex-1">
+            View Details
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );

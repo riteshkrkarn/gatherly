@@ -86,17 +86,8 @@ export default function SignUpForm() {
 
       // Append avatar file if present
       if (data.avatar) {
-        console.log("Appending avatar file:", {
-          name: data.avatar.name,
-          size: data.avatar.size,
-          type: data.avatar.type,
-        });
         formData.append("avatar", data.avatar);
-      } else {
-        console.log("No avatar file to append");
       }
-
-      console.log("FormData entries:", Array.from(formData.entries()));
 
       const response = await axios.post("/api/auth/sign-up", formData, {
         headers: {
@@ -112,7 +103,13 @@ export default function SignUpForm() {
 
       const axiosError = error as AxiosError<{ message: string }>;
       setIsSubmitting(false);
-      return NextResponse.json(axiosError.response?.data?.message);
+      return NextResponse.json(
+        {
+          success: false,
+          message: axiosError.response?.data?.message ?? "Error signing up",
+        },
+        { status: 400 }
+      );
     }
   };
 
@@ -202,7 +199,7 @@ export default function SignUpForm() {
             <FormField
               control={form.control}
               name="avatar"
-              render={({ field: { onChange, value, ...field } }) => (
+              render={({ field: { onChange, ...field } }) => (
                 <FormItem>
                   <FormLabel>Avatar</FormLabel>
                   <FormControl>
@@ -234,16 +231,18 @@ export default function SignUpForm() {
               )}
             />
 
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                </>
-              ) : (
-                "Sign Up"
-              )}
-              <ChevronRight className="ml-2 h-4 w-4" />
-            </Button>
+            <div className="flex justify-center">
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  </>
+                ) : (
+                  "Sign Up"
+                )}
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
           </form>
         </Form>
 

@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     // Fetch only the fields you need for the card
     const events = await EventModel
       .find({ status: 'open' })
-      .select('name description location imageUrl') // Only select needed fields
+      .select('name description location image') // Only select needed fields
       .sort({ dateStarted: 1 })
       .skip(skip)
       .limit(limit)

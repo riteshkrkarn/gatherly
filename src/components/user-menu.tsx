@@ -55,26 +55,26 @@ export default function UserMenu() {
         <DropdownMenuSeparator />
 
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
+          <DropdownMenuItem asChild className="hover: cursor-pointer">
             <Link href="/profile-page">
               <UserRound className="size-4 opacity-60" />
               <span>Profile</span>
             </Link>
           </DropdownMenuItem>
 
-          <DropdownMenuItem>
+          <DropdownMenuItem asChild className="hover: cursor-pointer">
             <BookCheck className="size-4 opacity-60" />
             <span>My Bookings</span>
           </DropdownMenuItem>
 
           {user?.isOrganizer ? (
-            <DropdownMenuItem>
+            <DropdownMenuItem className="hover: cursor-pointer">
               <TicketPlus className="size-4 opacity-60" />
               <span>Organize Event</span>
             </DropdownMenuItem>
           ) : null}
 
-          <DropdownMenuItem>
+          <DropdownMenuItem className="hover: cursor-pointer">
             <Settings className="size-4 opacity-60" />
             <span>Settings</span>
           </DropdownMenuItem>
@@ -82,7 +82,10 @@ export default function UserMenu() {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onClick={() => signOut()}>
+        <DropdownMenuItem
+          onClick={() => signOut()}
+          className="hover: cursor-pointer"
+        >
           <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
           <span>Logout</span>
         </DropdownMenuItem>

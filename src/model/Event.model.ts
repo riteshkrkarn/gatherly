@@ -4,10 +4,11 @@ import { EVENT_STATUSES, type EventStatus } from "@/constants/eventConstants";
 export interface Event extends Document {
   organizer: Types.ObjectId;
   name: string;
+  tagline: string;
   description: string;
   category: string;
   location: string;
-  imageUrl: string;
+  image: string;
   dateCreated: Date;
   dateStarted: Date;
   dateEnded: Date;
@@ -26,6 +27,10 @@ const EventSchema: Schema<Event> = new Schema(
       type: String,
       required: true,
     },
+    tagline: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,
@@ -38,7 +43,7 @@ const EventSchema: Schema<Event> = new Schema(
       type: String,
       required: true,
     },
-    imageUrl: {
+    image: {
       type: String,
       required: true,
     },
