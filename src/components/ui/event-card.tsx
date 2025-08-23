@@ -66,9 +66,11 @@ export default function EventCard({
       </CardContent>
 
       <CardFooter className="flex gap-2">
-        <Button className="flex-1">Book Now</Button>
-        <Link href={`/events/${id}`}>
-          <Button variant="outline" className="flex-1">
+        <Link href={`/booking-page/${id}`} className="flex-1">
+          <Button className="w-full">Book Now</Button>
+        </Link>
+        <Link href={`/events/${id}`} className="flex-1">
+          <Button variant="outline" className="w-full">
             View Details
           </Button>
         </Link>

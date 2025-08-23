@@ -11,7 +11,7 @@ import { Calendar, MapPin, Users, Tag } from "lucide-react";
 import Image from "next/image";
 import axios from "axios";
 import React, { useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 interface Event {
   _id: string;
@@ -42,6 +42,7 @@ async function getEventDetails(id: string) {
 
 export default function EventPage() {
   const params = useParams();
+  const router = useRouter();
   const id = params.id as string;
   const [event, setEvent] = React.useState<Event | null>(null);
   const { data: session } = useSession();
@@ -222,7 +223,7 @@ export default function EventPage() {
                             </p>
                           </div>
                           <div className="text-right">
-                            <p className="font-semibold">${ticket.price}</p>
+                            <p className="font-semibold">₹{ticket.price}</p>
                             <p className="text-xs text-muted-foreground">
                               {ticket.quantity} available
                             </p>
@@ -239,7 +240,7 @@ export default function EventPage() {
                             </p>
                           </div>
                           <div className="text-right">
-                            <p className="font-semibold">$99</p>
+                            <p className="font-semibold">₹99</p>
                             <p className="text-xs text-muted-foreground">
                               50 available
                             </p>
@@ -254,7 +255,7 @@ export default function EventPage() {
                             </p>
                           </div>
                           <div className="text-right">
-                            <p className="font-semibold">$149</p>
+                            <p className="font-semibold">₹149</p>
                             <p className="text-xs text-muted-foreground">
                               200 available
                             </p>
@@ -269,7 +270,7 @@ export default function EventPage() {
                             </p>
                           </div>
                           <div className="text-right">
-                            <p className="font-semibold">$299</p>
+                            <p className="font-semibold">₹299</p>
                             <p className="text-xs text-muted-foreground">
                               25 available
                             </p>
@@ -284,11 +285,12 @@ export default function EventPage() {
               {/* Action Buttons */}
               <div className="pt-2">
                 <Button
+                  onClick={() => router.push(`/booking-page/${id}`)}
                   size="lg"
                   className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 h-12"
                 >
                   <Tag className="mr-2 h-5 w-5" />
-                  Book Now - Starting from $
+                  Book Now - Starting from ₹
                   {event?.ticketTypes && event.ticketTypes.length > 0
                     ? Math.min(...event.ticketTypes.map((t) => t.price))
                     : "99"}
