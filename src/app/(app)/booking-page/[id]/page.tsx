@@ -14,6 +14,8 @@ import {
   Minus,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   Form,
   FormControl,
@@ -29,7 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { bookingSchema } from "@/schemas/bookingValdiationSchema";
+import { bookingSchema } from "@/schemas/bookingValidationSchema";
 import DashboardNavbar from "@/components/ui/dashboard-navbar";
 import Footer from "@/components/ui/footer";
 import { useParams } from "next/navigation";
@@ -55,6 +57,9 @@ export default function BookingPage() {
   const eventId = params.id as string;
   const [eventData, setEventData] = useState<Event | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
   const form = useForm<z.infer<typeof bookingSchema>>({
@@ -71,7 +76,8 @@ export default function BookingPage() {
     const fetchEventData = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get(`/api/events/${eventId}`);
+        const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+        const response = await axios.get(`${baseUrl}/api/events/${eventId}`);
         if (response.data.success) {
           setEventData(response.data.event);
           // Update form with correct eventId
@@ -110,8 +116,9 @@ export default function BookingPage() {
       formData.append("ticketTypeName", data.ticketTypeName);
       formData.append("quantityPurchased", data.quantityPurchased.toString());
 
+      const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
       const response = await axios.post(
-        `/api/book-ticket/${eventId}`,
+        `${baseUrl}/api/book-ticket/${eventId}`,
         formData,
         {
           headers: {
@@ -121,10 +128,14 @@ export default function BookingPage() {
       );
 
       if (response.data.success) {
-        alert("Booking successful!");
-        console.log("Booking data:", response.data);
+        setSuccessMessage("Booking successful! Redirecting to My Bookings...");
+        setErrorMessage("");
+        setTimeout(() => {
+          router.push("/my-events");
+        }, 2000);
       } else {
-        alert(response.data.message || "Booking failed!");
+        setErrorMessage(response.data.message || "Booking failed!");
+        setSuccessMessage("");
       }
     } catch (error) {
       console.error("Booking error:", error);
@@ -132,7 +143,8 @@ export default function BookingPage() {
         error instanceof Error
           ? error.message
           : "An error occurred while booking";
-      alert(errorMessage);
+      setErrorMessage(errorMessage);
+      setSuccessMessage("");
     } finally {
       setIsSubmitting(false);
     }
@@ -167,13 +179,24 @@ export default function BookingPage() {
             <div className="grid lg:grid-cols-2 gap-8 mb-12">
               {/* Event Details Card */}
               <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-                <div className="aspect-video bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-                  <div className="text-white text-center">
-                    <h3 className="text-2xl font-bold mb-2">
-                      {eventData.name}
-                    </h3>
-                    <p className="text-blue-100">Event Image Placeholder</p>
-                  </div>
+                <div className="aspect-video bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center relative">
+                  {eventData.image ? (
+                    <Image
+                      src={eventData.image}
+                      alt={eventData.name}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      priority
+                    />
+                  ) : (
+                    <div className="text-white text-center">
+                      <h3 className="text-2xl font-bold mb-2">
+                        {eventData.name}
+                      </h3>
+                      <p className="text-blue-100">Event Image Placeholder</p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="p-6">
@@ -356,7 +379,7 @@ export default function BookingPage() {
                           {isSubmitting ? (
                             <>
                               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                              Processing Booking...
+                              Booking...
                             </>
                           ) : (
                             <>
@@ -365,6 +388,17 @@ export default function BookingPage() {
                             </>
                           )}
                         </Button>
+                        {/* Success/Error Messages below the button */}
+                        {successMessage && (
+                          <div className="mt-4 text-green-600 bg-green-100 border border-green-200 rounded-lg px-4 py-3 text-center font-medium">
+                            {successMessage}
+                          </div>
+                        )}
+                        {errorMessage && (
+                          <div className="mt-4 text-red-600 bg-red-100 border border-red-200 rounded-lg px-4 py-3 text-center font-medium">
+                            {errorMessage}
+                          </div>
+                        )}
                       </div>
                     </form>
                   </Form>

@@ -51,7 +51,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { success: false, message: "Avatar is required" },
         { status: 400 }
-      )
+      );
     }
 
     if (existingUserByEmail) {
@@ -100,7 +100,13 @@ export async function POST(request: Request) {
       verifyCode
     );
 
+    console.log("Email response:", emailResponse);
+
     if (!emailResponse.success) {
+      console.error(
+        "Failed to send verification email:",
+        emailResponse.message
+      );
       return NextResponse.json(
         { success: false, message: emailResponse.message },
         { status: 500 }

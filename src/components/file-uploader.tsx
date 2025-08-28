@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { AlertCircleIcon, ImageIcon, UploadIcon, XIcon } from "lucide-react"
+import { AlertCircleIcon, ImageIcon, UploadIcon, XIcon } from "lucide-react";
 
-import { useFileUpload } from "@/hooks/use-file-upload"
-import { Button } from "@/components/ui/button"
-import Image from "next/image"
+import { useFileUpload } from "@/hooks/use-file-upload";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function FileUploader() {
-  const maxSizeMB = 2
-  const maxSize = maxSizeMB * 1024 * 1024 // 2MB default
+  const maxSizeMB = 2;
+  const maxSize = maxSizeMB * 1024 * 1024; // 2MB default
 
   const [
     { files, isDragging, errors },
@@ -24,9 +24,9 @@ export default function FileUploader() {
   ] = useFileUpload({
     accept: "image/svg+xml,image/png,image/jpeg,image/jpg,image/gif",
     maxSize,
-  })
-  const previewUrl = files[0]?.preview || null
-  const fileName = files[0]?.file.name || null
+  });
+  const previewUrl = files[0]?.preview || null;
+  const fileName = files[0]?.file.name || null;
 
   return (
     <div className="flex flex-col gap-2">
@@ -50,6 +50,8 @@ export default function FileUploader() {
               <Image
                 src={previewUrl}
                 alt={files[0]?.file?.name || "Uploaded image"}
+                width={200}
+                height={200}
                 className="mx-auto max-h-full rounded object-contain"
               />
             </div>
@@ -118,5 +120,5 @@ export default function FileUploader() {
         </a>
       </p>
     </div>
-  )
+  );
 }

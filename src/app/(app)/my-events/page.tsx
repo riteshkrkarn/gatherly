@@ -177,7 +177,8 @@ export default function MyEventsPage() {
         setIsLoading(true);
         setError(null);
 
-        const response = await axios.get("/api/get-my-events");
+        const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+        const response = await axios.get(`${baseUrl}/api/get-my-events`);
 
         if (response.data.success) {
           setMyEventsData(response.data.data);

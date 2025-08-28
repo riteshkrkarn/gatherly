@@ -28,7 +28,6 @@ export default function UserMenu() {
     return null;
   }
 
-  console.log(user.avatar);
 
   return (
     <DropdownMenu>
@@ -55,22 +54,19 @@ export default function UserMenu() {
         <DropdownMenuSeparator />
 
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild className="hover: cursor-pointer">
-            <Link href="/profile-page">
+          <DropdownMenuItem className="hover: cursor-pointer">
+            <Link href="/profile-page" className="flex gap-2">
               <UserRound className="size-4 opacity-60" />
               <span>Profile</span>
             </Link>
           </DropdownMenuItem>
 
-          <DropdownMenuItem asChild className="hover: cursor-pointer">
-            <BookCheck className="size-4 opacity-60" />
-            <span>My Bookings</span>
-          </DropdownMenuItem>
-
           {user?.isOrganizer ? (
             <DropdownMenuItem className="hover: cursor-pointer">
-              <TicketPlus className="size-4 opacity-60" />
-              <span>Organize Event</span>
+              <Link href="/create-event" className="flex gap-2">
+                <TicketPlus className="size-4 opacity-60" />
+                <span>Organize Event</span>
+              </Link>
             </DropdownMenuItem>
           ) : null}
 

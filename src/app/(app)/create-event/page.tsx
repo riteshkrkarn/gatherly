@@ -23,16 +23,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
-import { NextResponse } from "next/server";
 import { eventValidationSchema } from "@/schemas/eventValidationSchema";
-import FileUploader from "@/components/file-uploader";
 import DashboardNavbar from "@/components/ui/dashboard-navbar";
 import Footer from "@/components/ui/footer";
 
@@ -49,12 +43,13 @@ const categories = [
   "Other",
 ];
 
-export default function SignUpForm() {
+export default function CreateEvent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSameDayEvent, setIsSameDayEvent] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const form = useForm<z.infer<typeof eventValidationSchema>>({
     resolver: zodResolver(eventValidationSchema),
+    mode: "onSubmit",
     defaultValues: {
       name: "",
       tagline: "",
@@ -63,20 +58,19 @@ export default function SignUpForm() {
       location: "",
       image: undefined,
       dateStarted: new Date(),
-      dateEnded: new Date(),
-      ticketTypes: [{ name: "", price: 0, quantity: 1 }],
+      dateEnded: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      ticketTypes: [{ name: "General", price: 1, quantity: 1 }],
     },
   });
 
   const onSubmit = async (data: z.infer<typeof eventValidationSchema>) => {
     setIsSubmitting(true);
-
     try {
       const formData = new FormData();
       formData.append("name", data.name);
       formData.append("tagline", data.tagline);
       formData.append("description", data.description);
-      formData.append("cateogry", data.category);
+      formData.append("category", data.category);
       formData.append("location", data.location);
       formData.append("dateStarted", data.dateStarted.toISOString());
       formData.append("dateEnded", data.dateEnded.toISOString());
@@ -84,28 +78,39 @@ export default function SignUpForm() {
 
       if (data.image) {
         formData.append("image", data.image);
+      } else {
+        console.log("[CreateEvent] No image to append");
       }
 
-      const response = await axios.post("/api/create-event", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+      const response = await axios.post(
+        `${baseUrl}/api/create-event`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       setIsSubmitting(false);
-      return NextResponse.json(response.data);
+      setSuccessMessage(
+        "Event created successfully! Check it out in the events page. Redirecting to dashboard..."
+      );
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 2000);
+      return;
     } catch (error) {
-      console.log(error);
+      setIsSubmitting(false);
+      setSuccessMessage("");
 
       const axiosError = error as AxiosError<{ message: string }>;
-      setIsSubmitting(false);
-      return NextResponse.json(
-        {
-          success: false,
-          message: axiosError.response?.data?.message ?? "Error creating event",
-        },
-        { status: 400 }
-      );
+      const errorMessage =
+        axiosError.response?.data?.message ??
+        `Error creating event: ${error?.message}`;
+
+      console.log(errorMessage);
     }
   };
 
@@ -122,6 +127,12 @@ export default function SignUpForm() {
               Create an amazing event that brings people together
             </p>
           </div>
+
+          {successMessage && (
+            <div className="mb-6 text-green-600 bg-green-100 border border-green-200 rounded-lg px-4 py-3 text-center font-medium">
+              {successMessage}
+            </div>
+          )}
 
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-12">
             <Form {...form}>
@@ -198,7 +209,9 @@ export default function SignUpForm() {
                       <FormItem className="space-y-1">
                         <FormLabel>Category</FormLabel>
                         <Select
-                          onValueChange={field.onChange}
+                          onValueChange={(value) => {
+                            field.onChange(value);
+                          }}
                           defaultValue={field.value}
                         >
                           <FormControl>
@@ -221,12 +234,38 @@ export default function SignUpForm() {
 
                   <FormField
                     control={form.control}
-                    name="image"
-                    render={() => (
+                    name="location"
+                    render={({ field }) => (
                       <FormItem className="space-y-1">
-                        <FormLabel>Event Image</FormLabel>
+                        <FormLabel>Location</FormLabel>
                         <FormControl>
-                          <FileUploader />
+                          <Input
+                            placeholder="Enter event location"
+                            {...field}
+                            className="h-12"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="image"
+                    render={({ field: { onChange, ...field } }) => (
+                      <FormItem>
+                        <FormLabel>Image</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+
+                              onChange(file || undefined);
+                            }}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -234,42 +273,13 @@ export default function SignUpForm() {
                   />
                 </div>
 
-                {/* Date and Duration Section */}
+                {/* Date Section (Multi-Day Only) */}
                 <div className="mb-8">
                   <h2 className="text-xl font-semibold text-gray-900 mb-6 pb-2 border-b border-gray-200">
-                    Date & Duration
+                    Date
                   </h2>
 
                   <div className="grid md:grid-cols-3 gap-6">
-                    <div>
-                      <label className="text-sm font-medium text-gray-700 mb-1 block">
-                        Event Duration
-                      </label>
-                      <Select
-                        value={isSameDayEvent ? "same-day" : "multi-day"}
-                        onValueChange={(value) => {
-                          const isSameDay = value === "same-day";
-                          setIsSameDayEvent(isSameDay);
-                          if (isSameDay) {
-                            const startDate = form.getValues("dateStarted");
-                            form.setValue("dateEnded", startDate);
-                          }
-                        }}
-                      >
-                        <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Select event duration" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="same-day">
-                            Same Day Event
-                          </SelectItem>
-                          <SelectItem value="multi-day">
-                            Multi-Day Event
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
                     <FormField
                       control={form.control}
                       name="dateStarted"
@@ -303,9 +313,6 @@ export default function SignUpForm() {
                                 selected={field.value}
                                 onSelect={(date) => {
                                   field.onChange(date);
-                                  if (isSameDayEvent && date) {
-                                    form.setValue("dateEnded", date);
-                                  }
                                 }}
                                 disabled={(date) =>
                                   date <
@@ -320,53 +327,53 @@ export default function SignUpForm() {
                       )}
                     />
 
-                    {!isSameDayEvent && (
-                      <FormField
-                        control={form.control}
-                        name="dateEnded"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-col space-y-1">
-                            <FormLabel>End Date</FormLabel>
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <FormControl>
-                                  <Button
-                                    variant={"outline"}
-                                    className={`h-12 w-full pl-3 text-left font-normal ${
-                                      !field.value && "text-muted-foreground"
-                                    }`}
-                                  >
-                                    {field.value ? (
-                                      format(field.value, "PPP")
-                                    ) : (
-                                      <span>Pick a date</span>
-                                    )}
-                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                  </Button>
-                                </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent
-                                className="w-auto p-0"
-                                align="start"
-                              >
-                                <Calendar
-                                  mode="single"
-                                  selected={field.value}
-                                  onSelect={field.onChange}
-                                  disabled={(date) => {
-                                    const startDate =
-                                      form.getValues("dateStarted");
-                                    return date < startDate;
-                                  }}
-                                  initialFocus
-                                />
-                              </PopoverContent>
-                            </Popover>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    )}
+                    <FormField
+                      control={form.control}
+                      name="dateEnded"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col space-y-1">
+                          <FormLabel>End Date</FormLabel>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant={"outline"}
+                                  className={`h-12 w-full pl-3 text-left font-normal ${
+                                    !field.value && "text-muted-foreground"
+                                  }`}
+                                >
+                                  {field.value ? (
+                                    format(field.value, "PPP")
+                                  ) : (
+                                    <span>Pick a date</span>
+                                  )}
+                                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              className="w-auto p-0"
+                              align="start"
+                            >
+                              <Calendar
+                                mode="single"
+                                selected={field.value}
+                                onSelect={(date) => {
+                                  field.onChange(date);
+                                }}
+                                disabled={(date) => {
+                                  const startDate =
+                                    form.getValues("dateStarted");
+                                  return date < startDate;
+                                }}
+                                initialFocus
+                              />
+                            </PopoverContent>
+                          </Popover>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   </div>
                 </div>
 

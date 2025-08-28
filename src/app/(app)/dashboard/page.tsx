@@ -38,7 +38,10 @@ interface ApiResponse {
 
 async function getEvents(page: number = 1): Promise<ApiResponse> {
   try {
-    const data = await axios.get(`/api/get-events?page=${page}&limit=12`);
+    const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+    const data = await axios.get(
+      `${baseUrl}/api/get-events?page=${page}&limit=12`
+    );
 
     if (!data.status || data.status >= 400) {
       throw new Error(`Failed to fetch events: ${data.status}`);
@@ -47,62 +50,13 @@ async function getEvents(page: number = 1): Promise<ApiResponse> {
     return data.data;
   } catch (error) {
     console.error("Error fetching events:", error);
-    // Return sample data as fallback for testing
+    // Return empty data structure when API fails
     return {
-      events: [
-        {
-          _id: "507f1f77bcf86cd799439011",
-          name: "Tech Conference 2025",
-          tagline: "The future of technology starts here",
-          location: "Convention Center, San Francisco",
-          image: "/images/hero.jpg",
-          date: "March 15, 2025",
-        },
-        {
-          _id: "507f1f77bcf86cd799439012",
-          name: "Web Dev Summit",
-          tagline: "Learn the latest in web development",
-          location: "Tech Hub, Austin",
-          image: "/images/hero.jpg",
-          date: "April 20, 2025",
-        },
-        {
-          _id: "507f1f77bcf86cd799439013",
-          name: "AI Innovation Workshop",
-          tagline: "Hands-on AI and machine learning",
-          location: "Innovation Center, Seattle",
-          image: "/images/hero.jpg",
-          date: "May 10, 2025",
-        },
-        {
-          _id: "507f1f77bcf86cd799439014",
-          name: "Startup Pitch Night",
-          tagline: "Connect with investors and entrepreneurs",
-          location: "Business District, New York",
-          image: "/images/hero.jpg",
-          date: "June 5, 2025",
-        },
-        {
-          _id: "507f1f77bcf86cd799439015",
-          name: "Digital Marketing Masterclass",
-          tagline: "Master the art of digital marketing",
-          location: "Marketing Hub, Los Angeles",
-          image: "/images/hero.jpg",
-          date: "July 12, 2025",
-        },
-        {
-          _id: "507f1f77bcf86cd799439016",
-          name: "Blockchain Symposium",
-          tagline: "Exploring the future of blockchain",
-          location: "Finance Center, Chicago",
-          image: "/images/hero.jpg",
-          date: "August 18, 2025",
-        },
-      ],
+      events: [],
       pagination: {
         currentPage: page,
-        totalPages: 1,
-        totalEvents: 6,
+        totalPages: 0,
+        totalEvents: 0,
         hasNextPage: false,
         hasPrevPage: false,
       },
@@ -138,66 +92,76 @@ export default async function Dashboard({ searchParams }: PageProps) {
               ))}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center py-16 text-center">
-              <div className="text-6xl mb-4">🎪</div>
-              <h2 className="text-2xl font-semibold text-gray-700 mb-2">
-                No Events Nearby
+            <div className="flex flex-col items-center justify-center py-20 text-center">
+              <div className="text-8xl mb-6">�</div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                No Events Found
               </h2>
-              <p className="text-gray-500 max-w-md">
-                There are no events available in your area at the moment. Check
-                back later or explore events in other locations.
+              <p className="text-gray-600 max-w-lg text-lg leading-relaxed mb-6">
+                There are currently no events available in your area. New events
+                are added regularly, so please check back soon!
               </p>
+              <div className="flex flex-col sm:flex-row gap-4 text-sm text-gray-500">
+                <span>💡 Try refreshing the page</span>
+                <span>📅 Check back tomorrow</span>
+                <span>🌟 Create your own event</span>
+              </div>
             </div>
           )}
 
-          {/* Server-Side Pagination */}
-          <div className="flex justify-center">
-            <Pagination>
-              <PaginationContent>
-                {pagination.hasPrevPage && (
-                  <PaginationItem>
-                    <PaginationPrevious
-                      href={`/dashboard?page=${currentPage - 1}`}
-                    />
-                  </PaginationItem>
-                )}
-
-                {/* Generate page numbers */}
-                {Array.from({ length: pagination.totalPages }, (_, i) => i + 1)
-                  .filter(
-                    (page) =>
-                      page === 1 ||
-                      page === pagination.totalPages ||
-                      Math.abs(page - currentPage) <= 2
-                  )
-                  .map((page) => (
-                    <PaginationItem key={page}>
-                      <PaginationLink
-                        href={`/dashboard?page=${page}`}
-                        isActive={currentPage === page}
-                      >
-                        {page}
-                      </PaginationLink>
-                    </PaginationItem>
-                  ))}
-
-                {pagination.totalPages > 5 &&
-                  currentPage < pagination.totalPages - 2 && (
+          {/* Server-Side Pagination - Only show if there are events */}
+          {events.length > 0 && pagination.totalPages > 1 && (
+            <div className="flex justify-center">
+              <Pagination>
+                <PaginationContent>
+                  {pagination.hasPrevPage && (
                     <PaginationItem>
-                      <PaginationEllipsis />
+                      <PaginationPrevious
+                        href={`/dashboard?page=${currentPage - 1}`}
+                      />
                     </PaginationItem>
                   )}
 
-                {pagination.hasNextPage && (
-                  <PaginationItem>
-                    <PaginationNext
-                      href={`/dashboard?page=${currentPage + 1}`}
-                    />
-                  </PaginationItem>
-                )}
-              </PaginationContent>
-            </Pagination>
-          </div>
+                  {/* Generate page numbers */}
+                  {Array.from(
+                    { length: pagination.totalPages },
+                    (_, i) => i + 1
+                  )
+                    .filter(
+                      (page) =>
+                        page === 1 ||
+                        page === pagination.totalPages ||
+                        Math.abs(page - currentPage) <= 2
+                    )
+                    .map((page) => (
+                      <PaginationItem key={page}>
+                        <PaginationLink
+                          href={`/dashboard?page=${page}`}
+                          isActive={currentPage === page}
+                        >
+                          {page}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+
+                  {pagination.totalPages > 5 &&
+                    currentPage < pagination.totalPages - 2 && (
+                      <PaginationItem>
+                        <PaginationEllipsis />
+                      </PaginationItem>
+                    )}
+
+                  {pagination.hasNextPage && (
+                    <PaginationItem>
+                      <PaginationNext
+                        href={`/dashboard?page=${currentPage + 1}`}
+                      />
+                    </PaginationItem>
+                  )}
+                </PaginationContent>
+              </Pagination>
+            </div>
+          )}
         </div>
       </main>
       <Footer />

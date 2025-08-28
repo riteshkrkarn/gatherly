@@ -10,7 +10,7 @@ export async function GET(
   try {
     await dbConnect();
 
-    const { id } = params;
+    const { id } = await params;
 
     const event = await EventModel.findById(id);
 

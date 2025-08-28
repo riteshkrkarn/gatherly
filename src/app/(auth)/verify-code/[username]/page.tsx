@@ -16,7 +16,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { NextResponse } from "next/server";
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
 
 export default function Page() {
   const router = useRouter();
@@ -29,9 +30,15 @@ export default function Page() {
     },
   });
 
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const onSubmit = async function (data: z.infer<typeof verifyCodeSchema>) {
+    setIsVerifying(true);
+    setErrorMessage("");
     try {
-      const response = await axios.post("/api/verify-code", {
+      const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+      const response = await axios.post(`${baseUrl}/api/verify-code`, {
         username: params.username,
         code: data.code,
       });
@@ -39,10 +46,9 @@ export default function Page() {
       router.replace(`/sign-in`);
     } catch (error) {
       const axiosError = error as AxiosError;
-      return NextResponse.json(
-        { success: false, message: axiosError.message },
-        { status: 400 }
-      );
+      setErrorMessage(axiosError.message || "Verification failed");
+    } finally {
+      setIsVerifying(false);
     }
   };
 
@@ -65,13 +71,35 @@ export default function Page() {
                 <FormItem>
                   <FormLabel>Verification Code</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter code" {...field} />
+                    <Input
+                      placeholder="Enter code"
+                      {...field}
+                      disabled={isVerifying}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            {errorMessage && (
+              <div className="text-red-600 text-center text-sm font-medium">
+                {errorMessage}
+              </div>
+            )}
+            <Button
+              type="submit"
+              disabled={isVerifying}
+              className="w-full h-12"
+            >
+              {isVerifying ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Verifying...
+                </>
+              ) : (
+                "Submit"
+              )}
+            </Button>
           </form>
         </Form>
       </div>

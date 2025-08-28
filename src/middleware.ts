@@ -43,7 +43,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
-  if (!token.isOrganizer) {
+  if (
+    isOrganizerRoute &&
+    token &&
+    !(token as { isOrganizer?: boolean }).isOrganizer
+  ) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 

@@ -8,8 +8,6 @@ import {
   Text,
   Heading,
   Hr,
-  Img,
-  Link,
   Preview,
 } from "@react-email/components";
 

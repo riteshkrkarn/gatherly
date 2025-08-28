@@ -45,7 +45,7 @@ const EventSchema: Schema<Event> = new Schema(
     },
     image: {
       type: String,
-      required: true,
+      default: "",
     },
     dateCreated: {
       type: Date,
@@ -86,6 +86,8 @@ const EventSchema: Schema<Event> = new Schema(
   }
 );
 
-const EventModel = mongoose.model<Event>("Event", EventSchema);
+const EventModel =
+  (mongoose.models.Event as mongoose.Model<Event>) ||
+  mongoose.model<Event>("Event", EventSchema);
 
 export default EventModel;

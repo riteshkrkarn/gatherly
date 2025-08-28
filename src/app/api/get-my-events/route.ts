@@ -20,7 +20,7 @@ export async function GET() {
     }
 
     const user: User = session.user;
-    const userId = user.id;
+    const userId = user._id;
     const isOrganizer = user.isOrganizer || false;
 
     const attendedBookings = await BookingModel.find({ user: userId })

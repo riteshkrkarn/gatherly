@@ -5,11 +5,10 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { ChevronRight, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { PasswordInput } from "@/components/ui/passwordInput";
-import { useEffect, useState } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Form,
   FormControl,
@@ -109,7 +108,7 @@ export default function SinginForm() {
         </Form>
         <div className="text-center mt-4">
           <p>
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/sign-up" className="text-blue-500">
               Sign Up
             </Link>

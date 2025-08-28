@@ -39,6 +39,8 @@ const BookingSchema: Schema<Booking> = new Schema(
   }
 );
 
-const BookingModel = mongoose.model<Booking>("Booking", BookingSchema);
+const BookingModel =
+  (mongoose.models.Booking as mongoose.Model<Booking>) ||
+  mongoose.model<Booking>("Booking", BookingSchema);
 
 export default BookingModel;

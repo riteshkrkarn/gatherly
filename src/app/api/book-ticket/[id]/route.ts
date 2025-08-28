@@ -75,10 +75,11 @@ export async function POST(req: Request) {
     }
 
     const newBooking = new BookingModel({
-      user: user.id,
+      user: user._id,
       event: eventId,
       ticketType: ticketTypeName,
       quantityPurchased: quantity,
+      datePurchased: new Date(),
     });
 
     event.ticketTypes[ticketTypeIndex].quantity -= quantity;

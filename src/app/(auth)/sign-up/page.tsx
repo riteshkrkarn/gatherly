@@ -54,8 +54,9 @@ export default function SignUpForm() {
         setUsernameMessage("");
 
         try {
+          const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
           const response = await axios.get(
-            `/api/check-username-unique?username=${username}`
+            `${baseUrl}/api/check-username-unique?username=${username}`
           );
           setUsernameMessage(response.data.message);
         } catch (error) {
@@ -89,11 +90,16 @@ export default function SignUpForm() {
         formData.append("avatar", data.avatar);
       }
 
-      const response = await axios.post("/api/auth/sign-up", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+      const response = await axios.post(
+        `${baseUrl}/api/auth/sign-up`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       router.replace(`/verify-code/${username}`);
       setIsSubmitting(false);
@@ -210,7 +216,6 @@ export default function SignUpForm() {
                         const file = e.target.files?.[0];
                         onChange(file || undefined);
                       }}
-                      {...field}
                     />
                   </FormControl>
                   <FormMessage />

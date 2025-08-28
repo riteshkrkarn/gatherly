@@ -1,11 +1,7 @@
 "use client";
 import { useId } from "react";
-import { SearchIcon } from "lucide-react";
-
-import NotificationMenu from "@/components/notification-menu";
 import UserMenu from "@/components/user-menu";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -17,15 +13,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { usePathname } from "next/navigation";
+import NotificationMenu from "../notification-menu";
 
-// Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "/dashboard", label: "Events", active: true },
+  { href: "/dashboard", label: "Events" },
   { href: "/my-events", label: "My Events" },
   { href: "/about", label: "About" },
 ];
 
 export default function DashboardNavbar() {
+  const pathname = usePathname();
   const id = useId();
 
   return (
@@ -89,7 +87,7 @@ export default function DashboardNavbar() {
           {/* Logo */}
           <div className="flex items-center">
             <a
-              href="#"
+              href="/dashboard"
               className="text-primary hover:text-primary/90 text-xl md:text-2xl font-bold"
             >
               gatherly
@@ -103,7 +101,7 @@ export default function DashboardNavbar() {
               {navigationLinks.map((link, index) => (
                 <NavigationMenuItem key={index}>
                   <NavigationMenuLink
-                    active={link.active}
+                    active={pathname == link.href}
                     href={link.href}
                     className="text-muted-foreground hover:text-primary py-1.5 font-medium"
                   >
@@ -114,26 +112,7 @@ export default function DashboardNavbar() {
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        {/* Middle area */}
-        <div className="grow">
-          {/* Search form */}
-          <div className="relative mx-auto w-full max-w-xs">
-            <Input
-              id={id}
-              className="peer h-8 ps-8 pe-10"
-              placeholder="Search..."
-              type="search"
-            />
-            <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-2 peer-disabled:opacity-50">
-              <SearchIcon size={16} />
-            </div>
-            <div className="text-muted-foreground pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-2">
-              <kbd className="text-muted-foreground/70 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
-                ⌘K
-              </kbd>
-            </div>
-          </div>
-        </div>
+
         {/* Right side */}
         <div className="flex flex-1 items-center justify-end gap-2">
           {/* Notification */}
