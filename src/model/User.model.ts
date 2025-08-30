@@ -4,7 +4,7 @@ export interface User extends Document {
   name: string;
   email: string;
   username: string;
-  isOrganizer: string;
+  isOrganizer: boolean;
   avatar: string;
   password: string;
   verifyCode: string;
@@ -33,8 +33,8 @@ const UserSchema: Schema<User> = new Schema(
       unique: true,
     },
     isOrganizer: {
-      type: String,
-      default: "",
+      type: Boolean,
+      default: false,
     },
     avatar: {
       type: String,

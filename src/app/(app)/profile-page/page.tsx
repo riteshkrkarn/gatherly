@@ -13,7 +13,7 @@ type UserProfile = {
   name: string;
   email: string;
   username: string;
-  isOrganizer: string;
+  isOrganizer: boolean;
   avatar: string;
   isVerified: boolean;
 };

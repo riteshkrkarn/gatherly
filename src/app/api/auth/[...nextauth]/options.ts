@@ -7,42 +7,49 @@ import UserModel from "@/model/User.model";
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      id: "credentials",
       name: "Credentials",
       credentials: {
-        identifier: {
-          label: "Email or Username",
-          type: "text",
-          placeholder: "ramanujan or ramanujan@gmailcom",
-        },
+        identifier: { label: "Email or Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        console.log("Credentials received:", credentials);
+
         await dbConnect();
-        try {
-          const user = await UserModel.findOne({
-            $or: [{ email: credentials?.identifier }],
-          });
-          if (!user) {
-            throw new Error("User not found");
-          }
-          const isPasswordCorrect = await bcrypt.compare(
-            credentials!.password,
-            user.password
-          );
+        const userDoc = await UserModel.findOne({
+          $or: [
+            { email: credentials!.identifier },
+            { username: credentials!.identifier },
+          ],
+        });
+        const user = userDoc ? userDoc.toObject() : null;
+        console.log("User found:", user);
 
-          if (!isPasswordCorrect) {
-            throw new Error("Password is incorrect");
-          } else {
-            const plainUser = JSON.parse(JSON.stringify(user));
-
-            return plainUser;
-          }
-        } catch (err: unknown) {
-          throw new Error(
-            err instanceof Error ? err.message : "An error occurred"
-          );
+        if (!user) {
+          console.log("No user found for email:", credentials!.identifier);
+          return null;
         }
+
+        // Check if user is verified (if required)
+        if (!user.isVerified) {
+          console.log("User not verified:", user.email);
+          return null;
+        }
+
+        // Check password
+        const isValid = await bcrypt.compare(
+          credentials!.password,
+          user.password
+        );
+        console.log("Password valid:", isValid);
+
+        if (!isValid) {
+          console.log("Invalid password for user:", user.email);
+          return null;
+        }
+
+        // If all checks pass, return user object
+        return user;
       },
     }),
   ],

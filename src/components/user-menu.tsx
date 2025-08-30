@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { UserRound, Settings, BookCheck, TicketPlus } from "lucide-react";
+import { UserRound, Settings, TicketPlus } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { User } from "next-auth";
 
@@ -28,6 +28,7 @@ export default function UserMenu() {
     return null;
   }
 
+  console.log("Is Organizer:", user?.isOrganizer);
 
   return (
     <DropdownMenu>
