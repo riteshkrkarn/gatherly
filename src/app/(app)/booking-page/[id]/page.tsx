@@ -115,9 +115,7 @@ export default function BookingPage() {
       formData.append("ticketTypeName", data.ticketTypeName);
       formData.append("quantityPurchased", data.quantityPurchased.toString());
 
-      const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
-      const response = await axios.post(
-        `${baseUrl}/api/book-ticket/${eventId}`,
+      const response = await axios.post(`/api/book-ticket/${eventId}`,
         formData,
         {
           headers: {

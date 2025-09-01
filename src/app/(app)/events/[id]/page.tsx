@@ -30,8 +30,7 @@ interface Event {
 
 async function getEventDetails(id: string) {
   try {
-    const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
-    const data = await axios.get(`${baseUrl}/api/events/${id}`);
+    const data = await axios.get(`/api/events/${id}`);
     if (!data.status || data.status >= 400) {
       throw new Error(`Failed to fetch events: ${data.status}`);
     }
