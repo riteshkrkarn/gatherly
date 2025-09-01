@@ -81,6 +81,23 @@ export const authOptions: NextAuthOptions = {
 
       return token;
     },
+    async redirect({ url, baseUrl }) {
+      console.log("Redirect called with:", { url, baseUrl });
+
+      // If user is signing in, redirect to dashboard
+      if (url.includes("/sign-in") || url === baseUrl) {
+        return `${baseUrl}/dashboard`;
+      }
+
+      // If the url is relative, prepend baseUrl
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+
+      // If the url is on the same origin, allow it
+      if (new URL(url).origin === baseUrl) return url;
+
+      // Default to dashboard
+      return `${baseUrl}/dashboard`;
+    },
   },
   pages: {
     signIn: "/sign-in",

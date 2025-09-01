@@ -39,6 +39,7 @@ export default function SinginForm() {
       redirect: false,
       identifier: data.identifier,
       password: data.password,
+      callbackUrl: "/dashboard",
     });
 
     console.log("Sign in:", result);
