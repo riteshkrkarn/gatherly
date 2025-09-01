@@ -20,7 +20,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { success: false, message: result.error.message },
         { status: 400 }
-      )
+      );
     }
 
     const decodedUsername = decodeURIComponent(result.data.username);
@@ -39,7 +39,10 @@ export async function POST(request: Request) {
     if (isCodeNotExpired && isCodeValid) {
       user.isVerified = true;
       await user.save();
-      return NextResponse.json({ success: true, message: "User verified" }, {status: 200});
+      return NextResponse.json(
+        { success: true, message: "User verified" },
+        { status: 200 }
+      );
     } else if (!isCodeNotExpired) {
       return NextResponse.json(
         { success: false, message: "Verification code has expired" },
@@ -52,10 +55,10 @@ export async function POST(request: Request) {
       );
     }
   } catch (error) {
-    console.log("Error verifying otp");
+    console.log("Error verifying otp", error);
     return NextResponse.json(
       { success: false, message: "An error occurred" },
       { status: 500 }
-    )
+    );
   }
 }

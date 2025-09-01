@@ -42,6 +42,7 @@ export default function Page() {
         username: params.username,
         code: data.code,
       });
+      console.log(response);
 
       router.replace(`/sign-in`);
     } catch (error) {

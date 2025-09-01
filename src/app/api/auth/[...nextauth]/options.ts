@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User.model";
+import { User } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -12,12 +13,17 @@ export const authOptions: NextAuthOptions = {
         identifier: { label: "Email or Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials): Promise<any> {
+      async authorize(credentials): Promise<User | null> {
+        if (!credentials?.identifier || !credentials?.password) {
+          console.log("Missing credentials");
+          return null;
+        }
+
         await dbConnect();
         const user = await UserModel.findOne({
           $or: [
-            { email: credentials!.identifier },
-            { username: credentials!.identifier },
+            { email: credentials.identifier },
+            { username: credentials.identifier },
           ],
         });
 
@@ -43,7 +49,15 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        return user;
+        return {
+          id: user._id?.toString() as string, // For NextAuth
+          _id: user._id?.toString() as string, // For our app
+          email: user.email,
+          name: user.name,
+          username: user.username,
+          isOrganizer: user.isOrganizer,
+          avatar: user.avatar,
+        };
       },
     }),
   ],

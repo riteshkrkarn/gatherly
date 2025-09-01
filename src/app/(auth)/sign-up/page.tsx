@@ -205,7 +205,7 @@ export default function SignUpForm() {
             <FormField
               control={form.control}
               name="avatar"
-              render={({ field: { onChange, ...field } }) => (
+              render={({ field: { onChange } }) => (
                 <FormItem>
                   <FormLabel>Avatar</FormLabel>
                   <FormControl>

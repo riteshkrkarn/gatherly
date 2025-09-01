@@ -89,9 +89,6 @@ export default function UpdateUser() {
   const onSubmit = async (data: z.infer<typeof updateUserSchema>) => {
     console.log("[UpdateUser] onSubmit called with data:", data);
 
-    // Manual validation only for selected fields
-    const errors: any = {};
-
     // Validate name if selected
     if (selectedFields.name) {
       if (!data.name || data.name.trim().length < 3) {
@@ -165,6 +162,8 @@ export default function UpdateUser() {
           },
         }
       );
+
+      console.log(response);
 
       setIsSubmitting(false);
       setSuccessMessage("Profile updated successfully!");
@@ -260,7 +259,7 @@ export default function UpdateUser() {
                 <FormField
                   control={form.control}
                   name="avatar"
-                  render={({ field: { onChange, value, ...field } }) => (
+                  render={({ field: { onChange, ...field } }) => (
                     <FormItem>
                       <FormLabel>Avatar</FormLabel>
                       <FormControl>

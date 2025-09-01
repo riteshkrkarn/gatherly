@@ -37,6 +37,7 @@ async function getEventDetails(id: string) {
     }
     return data.data.event;
   } catch (error) {
+    console.error("Error fetching events:", error);
     return null;
   }
 }

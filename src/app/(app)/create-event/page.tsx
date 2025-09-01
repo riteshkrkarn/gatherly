@@ -96,6 +96,7 @@ export default function CreateEvent() {
           },
         }
       );
+      console.log(response);
 
       setIsSubmitting(false);
       setSuccessMessage(
@@ -111,8 +112,7 @@ export default function CreateEvent() {
 
       const axiosError = error as AxiosError<{ message: string }>;
       const errorMessage =
-        axiosError.response?.data?.message ??
-        `Error creating event: ${error?.message}`;
+        axiosError.response?.data?.message ?? `Error creating event: ${error}`;
 
       console.log(errorMessage);
     }
@@ -251,7 +251,7 @@ export default function CreateEvent() {
                   <FormField
                     control={form.control}
                     name="image"
-                    render={({ field: { onChange, ...field } }) => (
+                    render={({ field: { onChange } }) => (
                       <FormItem>
                         <FormLabel>Image</FormLabel>
                         <FormControl>

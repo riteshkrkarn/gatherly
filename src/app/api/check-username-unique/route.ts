@@ -45,7 +45,7 @@ export async function GET(request: Request) {
       { status: 200 }
     );
   } catch (error) {
-    console.log("Error checking username uniqueness.");
+    console.log("Error checking username uniqueness:", error);
     return NextResponse.json(
       { success: false, message: "An error occurred" },
       { status: 500 }

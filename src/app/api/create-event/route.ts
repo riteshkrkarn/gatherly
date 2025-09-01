@@ -40,6 +40,7 @@ export async function POST(request: Request) {
       try {
         ticketTypes = JSON.parse(ticketTypesData);
       } catch (parseError) {
+        console.error("Invalid ticket types format:", parseError);
         return NextResponse.json(
           { success: false, message: "Invalid ticket types format" },
           { status: 400 }

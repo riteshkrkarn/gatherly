@@ -1,5 +1,4 @@
 "use client";
-import { useId } from "react";
 import UserMenu from "@/components/user-menu";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,7 +23,6 @@ const navigationLinks = [
 
 export default function DashboardNavbar() {
   const pathname = usePathname();
-  const id = useId();
 
   return (
     <header className="border-b px-4 md:px-6">
@@ -74,7 +72,7 @@ export default function DashboardNavbar() {
                       <NavigationMenuLink
                         href={link.href}
                         className="py-1.5"
-                        active={link.active}
+                        active={pathname === link.href}
                       >
                         {link.label}
                       </NavigationMenuLink>
