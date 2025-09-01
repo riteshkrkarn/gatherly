@@ -100,7 +100,7 @@ export default function SignUpForm() {
           },
         }
       );
-
+      console.log(response);
       router.replace(`/verify-code/${username}`);
       setIsSubmitting(false);
       return NextResponse.json(response.data);
