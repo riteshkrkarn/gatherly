@@ -4,8 +4,14 @@ import { getToken } from "next-auth/jwt";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-  const token = await getToken({ req: request });
+  const token = await getToken({
+    req: request,
+    secret: process.env.SECRET,
+  });
+
   const url = request.nextUrl;
+
+  if (url.pathname.startsWith("/api/auth")) return NextResponse.next();
 
   if (
     token &&
@@ -30,6 +36,11 @@ export async function middleware(request: NextRequest) {
   );
 
   if (isProtectedRoute && !token) {
+    const referer = request.headers.get("referer") || "/";
+    if (referer && referer.includes("sign-in")) {
+      return NextResponse.next();
+    }
+
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 

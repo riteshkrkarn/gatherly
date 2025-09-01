@@ -65,9 +65,13 @@ async function getEvents(page: number = 1): Promise<ApiResponse> {
 }
 
 export default async function Dashboard({ searchParams }: PageProps) {
+  console.log("Dashboard loading");
+
   const params = await searchParams;
   const currentPage = parseInt(params.page || "1");
   const { events, pagination } = await getEvents(currentPage);
+
+  console.log("Dashboard loaded");
 
   return (
     <div className="min-h-screen flex flex-col">
