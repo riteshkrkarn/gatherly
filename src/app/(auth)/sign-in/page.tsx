@@ -41,6 +41,8 @@ export default function SinginForm() {
       password: data.password,
     });
 
+    console.log(result);
+
     if (result?.error) {
       setIsSubmitting(false);
       console.log(result.error);
@@ -48,7 +50,7 @@ export default function SinginForm() {
       return;
     }
     if (result?.url) {
-      router.replace(`/dashboard`);
+      router.push(`/dashboard`);
     }
   };
 
