@@ -42,8 +42,6 @@ export default function SinginForm() {
       callbackUrl: "/dashboard",
     });
 
-    console.log("Sign in:", result);
-
     if (result?.error) {
       setIsSubmitting(false);
       console.log(result.error);

@@ -76,8 +76,7 @@ export default function BookingPage() {
     const fetchEventData = async () => {
       try {
         setIsLoading(true);
-        const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
-        const response = await axios.get(`${baseUrl}/api/events/${eventId}`);
+        const response = await axios.get(`/api/events/${eventId}`);
         if (response.data.success) {
           setEventData(response.data.event);
           // Update form with correct eventId
