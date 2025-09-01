@@ -132,12 +132,6 @@ export default function CreateEvent() {
             </p>
           </div>
 
-          {successMessage && (
-            <div className="mb-6 text-green-600 bg-green-100 border border-green-200 rounded-lg px-4 py-3 text-center font-medium">
-              {successMessage}
-            </div>
-          )}
-
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-12">
             <Form {...form}>
               <form
@@ -540,6 +534,11 @@ export default function CreateEvent() {
                       )}
                     </Button>
                   </div>
+                  {successMessage && (
+                    <div className="mt-6 text-green-600 bg-green-100 border border-green-200 rounded-lg px-4 py-3 text-center font-medium">
+                      {successMessage}
+                    </div>
+                  )}
                 </div>
               </form>
             </Form>

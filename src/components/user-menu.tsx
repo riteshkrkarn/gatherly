@@ -28,8 +28,6 @@ export default function UserMenu() {
     return null;
   }
 
-  console.log("Is Organizer:", user?.isOrganizer);
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

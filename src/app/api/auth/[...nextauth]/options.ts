@@ -12,18 +12,14 @@ export const authOptions: NextAuthOptions = {
         identifier: { label: "Email or Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
-        console.log("Credentials received:", credentials);
-
+      async authorize(credentials): Promise<any> {
         await dbConnect();
-        const userDoc = await UserModel.findOne({
+        const user = await UserModel.findOne({
           $or: [
             { email: credentials!.identifier },
             { username: credentials!.identifier },
           ],
         });
-        const user = userDoc ? userDoc.toObject() : null;
-        console.log("User found:", user);
 
         if (!user) {
           console.log("No user found for email:", credentials!.identifier);
@@ -38,17 +34,15 @@ export const authOptions: NextAuthOptions = {
 
         // Check password
         const isValid = await bcrypt.compare(
-          credentials!.password,
+          credentials.password,
           user.password
         );
-        console.log("Password valid:", isValid);
 
         if (!isValid) {
           console.log("Invalid password for user:", user.email);
           return null;
         }
 
-        // If all checks pass, return user object
         return user;
       },
     }),
