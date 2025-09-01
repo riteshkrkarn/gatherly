@@ -13,7 +13,7 @@ import {
 import axios from "axios";
 
 interface PageProps {
-  searchParams: { page?: string };
+  searchParams: Promise<{ page?: string }>;
 }
 
 interface Event {
