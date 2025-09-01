@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/form";
 import { signIn } from "next-auth/react";
 import { signInSchema } from "@/schemas/loginValidationSchema";
-import { NextResponse } from "next/server";
 
 export default function SinginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,10 +43,9 @@ export default function SinginForm() {
 
     if (result?.error) {
       setIsSubmitting(false);
-      return NextResponse.json(
-        { success: false, message: result.error },
-        { status: 400 }
-      );
+      console.log(result.error);
+      setIsSubmitting(false);
+      return;
     }
     if (result?.url) {
       router.replace(`/dashboard`);
