@@ -41,7 +41,7 @@ export default function SinginForm() {
       password: data.password,
     });
 
-    console.log(result);
+    console.log("Sign in:", result);
 
     if (result?.error) {
       setIsSubmitting(false);
