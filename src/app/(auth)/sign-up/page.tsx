@@ -253,7 +253,7 @@ export default function SignUpForm() {
 
         <div className="text-center mt-4">
           <p>
-            Already have an accoun?{" "}
+            Already have an account?{" "}
             <Link href="/sign-in" className="text-blue-500">
               Sign In
             </Link>
