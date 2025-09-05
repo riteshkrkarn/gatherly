@@ -86,16 +86,11 @@ export default function CreateEvent() {
         console.log("[CreateEvent] No image to append");
       }
 
-      const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
-      const response = await axios.post(
-        `${baseUrl}/api/create-event`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post(`/api/create-event`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       console.log(response);
 
       setIsSubmitting(false);

@@ -91,12 +91,12 @@ export default function EventPage() {
                         <p className="text-muted-foreground">
                           {event?.dateStarted && event?.dateEnded
                             ? `${new Date(event.dateStarted).toLocaleDateString()} - ${new Date(event.dateEnded).toLocaleDateString()}`
-                            : "March 15, 2025 - March 17, 2025"}
+                            : "Date TBA"}
                         </p>
                         <p className="text-muted-foreground text-sm">
-                          {event?.dateStarted
+                          {event?.dateStarted && event?.dateEnded
                             ? `${new Date(event.dateStarted).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} - ${new Date(event.dateEnded).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`
-                            : "9:00 AM - 6:00 PM"}
+                            : "Time TBA"}
                         </p>
                       </div>
                     </div>
@@ -108,7 +108,7 @@ export default function EventPage() {
                       <div>
                         <p className="font-medium">Location</p>
                         <p className="text-muted-foreground">
-                          {event?.location || "Convention Center, New York"}
+                          {event?.location || "Location TBA"}
                         </p>
                       </div>
                     </div>
@@ -137,11 +137,10 @@ export default function EventPage() {
                   <Badge variant="secondary">{event?.status || "Open"}</Badge>
                 </div>
                 <h1 className="text-3xl font-bold mb-2">
-                  {event?.name || "Tech Conference 2025"}
+                  {event?.name || "Event Title"}
                 </h1>
                 <p className="text-muted-foreground text-lg">
-                  {event?.tagline ||
-                    "Join us for the most exciting technology conference of the year"}
+                  {event?.tagline || "Event description"}
                 </p>
               </div>
 
@@ -183,7 +182,7 @@ export default function EventPage() {
                     <Users className="h-5 w-5 text-muted-foreground" />
                     <div>
                       <p className="font-medium">Organizer</p>
-                      <p className="text-muted-foreground">Tech Events Inc.</p>
+                      <p className="text-muted-foreground">Organizer TBA</p>
                     </div>
                   </div>
                 </CardContent>
@@ -197,7 +196,7 @@ export default function EventPage() {
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
                     {event?.description ||
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."}
+                      "Event description will be displayed here once available."}
                   </p>
                 </CardContent>
               </Card>
@@ -232,52 +231,9 @@ export default function EventPage() {
                         </div>
                       ))
                     ) : (
-                      <>
-                        <div className="flex items-center justify-between p-3 border rounded-lg">
-                          <div>
-                            <p className="font-medium">Early Bird</p>
-                            <p className="text-sm text-muted-foreground">
-                              Limited time offer
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <p className="font-semibold">₹99</p>
-                            <p className="text-xs text-muted-foreground">
-                              50 available
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between p-3 border rounded-lg">
-                          <div>
-                            <p className="font-medium">Regular</p>
-                            <p className="text-sm text-muted-foreground">
-                              Standard admission
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <p className="font-semibold">₹149</p>
-                            <p className="text-xs text-muted-foreground">
-                              200 available
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between p-3 border rounded-lg">
-                          <div>
-                            <p className="font-medium">VIP</p>
-                            <p className="text-sm text-muted-foreground">
-                              Premium experience
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <p className="font-semibold">₹299</p>
-                            <p className="text-xs text-muted-foreground">
-                              25 available
-                            </p>
-                          </div>
-                        </div>
-                      </>
+                      <div className="flex items-center justify-center p-8 text-muted-foreground">
+                        <p>No ticket information available</p>
+                      </div>
                     )}
                   </div>
                 </CardContent>

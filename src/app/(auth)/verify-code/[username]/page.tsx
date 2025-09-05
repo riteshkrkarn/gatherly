@@ -37,8 +37,7 @@ export default function Page() {
     setIsVerifying(true);
     setErrorMessage("");
     try {
-      const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
-      const response = await axios.post(`${baseUrl}/api/verify-code`, {
+      const response = await axios.post(`/api/verify-code`, {
         username: params.username,
         code: data.code,
       });

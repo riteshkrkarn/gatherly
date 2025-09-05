@@ -67,9 +67,8 @@ export default function UpdateUser() {
         setUsernameMessage("");
 
         try {
-          const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
           const response = await axios.get(
-            `${baseUrl}/api/check-username-unique?username=${username}`
+            `/api/check-username-unique?username=${username}`
           );
           setUsernameMessage(response.data.message);
         } catch (error) {
@@ -152,16 +151,11 @@ export default function UpdateUser() {
         formData.append("avatar", data.avatar);
       }
 
-      const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
-      const response = await axios.post(
-        `${baseUrl}/api/update-user`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post(`/api/update-user`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       console.log(response);
 
