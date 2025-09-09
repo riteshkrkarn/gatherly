@@ -2,12 +2,13 @@
 
 <div align="center">
   <img src="https://img.shields.io/badge/Status-In%20Development-yellow?style=for-the-badge" alt="Status" />
-  
+  <img src="https://img.shields.io/badge/Live-gatherly.r2k.dev-blue?style=for-the-badge" alt="Live Demo" />
 </div>
 
 <div align="center">
-  <h3>🎪 The Ultimate Event Ticketing Platform</h3>
-  <p>A modern, full-stack event management and ticketing application built with Next.js 14, TypeScript, and MongoDB. Discover local events, book tickets seamlessly, and manage your own events with ease.</p>
+  <h3>🎪 Modern Event Management & Ticketing Platform</h3>
+  <p>A full-stack event management application built with Next.js 14, TypeScript, and MongoDB. Create events, manage bookings, and discover local experiences with a clean, modern interface.</p>
+  <p><strong>🌐 Live Demo:</strong> <a href="https://gatherly.r2k.dev">gatherly.r2k.dev</a></p>
 </div>
 
 ---
@@ -30,96 +31,56 @@
 
 ### 👥 For Attendees
 
-- **Event Discovery**: Browse and search local events by category, location, and date
-- **Secure Booking**: Book tickets with validation and confirmation
-- **User Profiles**: Manage personal information and booking history
-- **Responsive Design**: Seamless experience across all devices
-- **Real-time Updates**: Get instant notifications about event changes
+- **Event Discovery**: Browse and discover local events
+- **Secure Booking**: Book tickets with real-time availability and confirmation
+- **User Dashboard**: Manage profile, view booking history, and track events
+- **Clean UI**: Modern, responsive design with shadcn/ui components
 
 ### 🎭 For Organizers
 
-- **Event Creation**: Create and manage events with detailed information
-- **Ticket Management**: Configure multiple ticket types with pricing
-- **Sales Analytics**: Track ticket sales and revenue
-- **Event Dashboard**: Comprehensive event management interface
-- **Image Upload**: Upload event banners via Cloudinary integration
+- **Event Creation**: Create detailed events with multiple ticket types
+- **Image Upload**: Upload event banners via Supabase integration
+- **Booking Management**: Track ticket sales
+- **Role-based Access**: Organizer-specific features and permissions
 
-### 🔐 Security & Authentication
+### 🔐 Authentication & Security
 
-- **NextAuth Integration**: Secure authentication with multiple providers
-- **Role-based Access**: Different permissions for attendees and organizers
-- **Email Verification**: Secure account verification system
-- **Password Security**: Encrypted password storage with bcrypt
+- **NextAuth Integration**: Secure credential-based authentication
+- **Email Verification**: OTP-based account verification with Resend
+- **Role Management**: Attendee and organizer role separation
+- **Form Validation**: Comprehensive validation with Zod and React Hook Form
 
 ---
 
-## � Development Status
+## 📋 Development Status
+
+> **Note**: This is a portfolio project focused on showcasing full-stack development skills and modern web technologies. Some features like notifications are UI-only components to demonstrate interface design.
 
 ### ✅ Completed Features
 
-#### **Database Models & Schemas**
+- **Authentication System**: Complete NextAuth setup with credentials provider
+- **User Management**: Registration, login, email verification with Resend
+- **Event Creation**: Full event management with image upload via Supabase
+- **Booking System**: Ticket booking with real-time availability
+- **Database Design**: MongoDB with Mongoose ODM for all models
+- **Form Handling**: React Hook Form integration across all forms
+- **UI Components**: Clean, responsive design with shadcn/ui and Tailwind CSS
+- **Role-based Access**: Organizer vs attendee permissions and routing
 
-- **User Model**: Complete with authentication, role-based access, email verification
-- **Event Model**: Full structure with organizer relations, ticket types, status management
-- **Booking Model**: Transaction tracking with user-event relationships
-- **Database Connection**: MongoDB Atlas integration with Mongoose ODM
+### � In Progress
 
-#### **Authentication System**
+- **Payment Integration**: Stripe/PayPal integration for secure transactions
+- **User Reviews**: Event rating and review system
+- **Ticket Management**: Cancellation and refund functionality
+- **Account Settings**: Password change and profile management
 
-- **NextAuth.js Integration**: Credentials provider setup
-- **Password Security**: bcrypt encryption and validation
-- **Email Verification**: OTP-based account verification system
-- **User Registration**: Complete signup flow with validation
+### � UI-Only Features
 
-#### **API Routes**
-
-- **Auth Endpoints**: Sign-up, verification, username validation
-- **Event Registration**: Event creation API endpoint
-- **Database Health**: Connection testing and error handling
-
-#### **Frontend Components**
-
-- **Homepage**: Responsive landing page with hero section
-- **Auth Forms**: Sign-in, sign-up, and OTP verification forms
-- **UI Components**: shadcn/ui integration with custom styling
-- **Navigation**: Responsive navbar component
-
-#### **Data Validation**
-
-- **Zod Schemas**: Comprehensive validation for all forms and API endpoints
-- **Type Safety**: Full TypeScript implementation across components
-- **Input Sanitization**: Username, email, password validation with regex patterns
-
-#### **Project Infrastructure**
-
-- **Next.js 14 App Router**: Modern routing with TypeScript
-- **Middleware**: Authentication routing and protection
-- **Constants Management**: Centralized event status and category constants
-
-### 🔄 In Progress
-
-- **Payment Integration**: Stripe setup for ticket purchases
-- **Event Management**: Complete CRUD operations for events
-- **User Dashboard**: Profile management and booking history
-
-### 📋 Planned Features
-
-- **Event Discovery**: Search and filtering functionality
-- **File Upload**: Cloudinary integration for event images
-- **Email Notifications**: Booking confirmations and updates
-- **Analytics Dashboard**: Event organizer insights
-
-### 📊 Project Progress
-
-- **Backend Architecture**: 85% Complete
-- **Database Design**: 95% Complete
-- **Authentication**: 80% Complete
-- **Frontend**: 35% Complete
-- **API Routes**: 60% Complete
+- **Notification Menu**: Interface component without backend implementation (focus was on core functionality)
 
 ---
 
-## �🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 ### Frontend
 
@@ -137,7 +98,6 @@
   <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
   <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
   <img src="https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logo=mongoose&logoColor=white" alt="Mongoose" />
-  <img src="https://img.shields.io/badge/MongoDB%20Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB Atlas" />
 </div>
 
 ### Authentication & Validation
@@ -146,12 +106,14 @@
   <img src="https://img.shields.io/badge/NextAuth.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="NextAuth" />
   <img src="https://img.shields.io/badge/Zod-3E67B1?style=for-the-badge&logo=zod&logoColor=white" alt="Zod" />
   <img src="https://img.shields.io/badge/bcrypt-8A2BE2?style=for-the-badge" alt="bcrypt" />
+  <img src="https://img.shields.io/badge/React%20Hook%20Form-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white" alt="React Hook Form" />
 </div>
 
 ### Cloud Services
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white" alt="Cloudinary" />
+  <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/Resend-000000?style=for-the-badge&logo=resend&logoColor=white" alt="Resend" />
   <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
 </div>
 
@@ -175,7 +137,8 @@
 - Node.js 18.x or later
 - npm or yarn
 - MongoDB Atlas account
-- Cloudinary account (for image uploads)
+- Supabase account (for image uploads)
+- Resend account (for email verification)
 
 ### Installation
 
@@ -202,17 +165,17 @@
    NEXTAUTH_SECRET=your_nextauth_secret
    NEXTAUTH_URL=http://localhost:3000
 
-   # Cloudinary (for image uploads)
-   CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
-   CLOUDINARY_API_KEY=your_cloudinary_api_key
-   CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+   # Supabase (for image uploads)
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 
-   # Email Configuration (for verification)
-   EMAIL_SERVER_HOST=your_smtp_host
-   EMAIL_SERVER_PORT=587
-   EMAIL_SERVER_USER=your_email
-   EMAIL_SERVER_PASSWORD=your_email_password
-   EMAIL_FROM=noreply@gatherly.com
+   # Resend (for email verification)
+   RESEND_API_KEY=your_resend_api_key
+
+   # Stripe (for payments - optional)
+   STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+   STRIPE_SECRET_KEY=your_stripe_secret_key
    ```
 
 4. **Run the development server**
@@ -264,12 +227,23 @@ gatherly/
 
 ### Authentication
 
-- `POST /api/auth/signup` - User registration
-- `POST /api/auth/signin` - User login
+- `POST /api/auth/sign-up` - User registration
+- `POST /api/verify-code` - Email verification
+- `GET /api/check-username-unique` - Check username availability
 
 ### Events
 
-- `GET /api/events` - Get all events
+- `GET /api/get-events` - Get all events with pagination
+- `GET /api/events/[id]` - Get single event details
+- `POST /api/create-event` - Create new event (organizers only)
+
+### Bookings
+
+- `POST /api/book-ticket/[id]` - Book event tickets
+
+### Users
+
+- `POST /api/update-user` - Update user profile
 
 ## 🌐 Real-World Usage
 
@@ -297,7 +271,7 @@ gatherly/
 
 ## 🤝 Contributing
 
-This is a learning and portfolio project, but contributions are welcome! Here's how you can help:
+This is a portfolio project for showcasing full-stack development skills and learning modern web technologies. Contributions are welcome!
 
 ### Ways to Contribute
 
