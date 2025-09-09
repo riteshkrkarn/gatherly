@@ -197,27 +197,71 @@
 ```
 gatherly/
 ├── src/
-│   ├── app/                 # Next.js 14 App Router
-│   │   ├── (auth)/         # Authentication routes
-│   │   ├── api/            # API routes
-│   │   ├── events/         # Event pages
-│   │   └── dashboard/      # User dashboard
-│   ├── components/         # Reusable UI components
-│   │   ├── ui/            # shadcn/ui components
-│   │   └── custom/        # Custom components
-│   ├── lib/               # Utility functions
-│   │   ├── dbConnect.ts   # Database connection
-│   │   └── auth.ts        # Authentication config
-│   ├── models/            # MongoDB models
-│   │   ├── User.model.ts  # User schema
-│   │   ├── Event.model.ts # Event schema
-│   │   └── Booking.model.ts # Booking schema
-│   ├── schemas/           # Zod validation schemas
+│   ├── app/                    # Next.js 14 App Router
+│   │   ├── (app)/             # Protected app routes
+│   │   │   ├── about/         # About page
+│   │   │   ├── booking-page/  # Ticket booking pages
+│   │   │   ├── create-event/  # Event creation (organizers)
+│   │   │   ├── dashboard/     # Main dashboard
+│   │   │   ├── events/        # Event detail pages
+│   │   │   ├── my-events/     # User's events/bookings
+│   │   │   ├── profile-page/  # User profile
+│   │   │   └── update-user/   # Profile update
+│   │   ├── (auth)/            # Authentication routes
+│   │   │   ├── sign-in/       # Login page
+│   │   │   ├── sign-up/       # Registration page
+│   │   │   └── verify-code/   # Email verification
+│   │   ├── api/               # API routes
+│   │   │   ├── auth/          # Authentication APIs
+│   │   │   ├── book-ticket/   # Booking APIs
+│   │   │   ├── check-username-unique/ # Username validation
+│   │   │   ├── create-event/  # Event creation API
+│   │   │   ├── events/        # Event-related APIs
+│   │   │   ├── get-events/    # Event listing API
+│   │   │   ├── get-my-events/ # User events API
+│   │   │   ├── get-user/      # User data API
+│   │   │   ├── update-user/   # User update API
+│   │   │   └── verify-code/   # Email verification API
+│   │   ├── favicon.ico        # App favicon
+│   │   ├── globals.css        # Global styles
+│   │   ├── layout.tsx         # Root layout
+│   │   └── page.tsx           # Homepage
+│   ├── components/            # Reusable components
+│   │   ├── providers/         # Context providers
+│   │   ├── ui/               # shadcn/ui & Origin UI components
+│   │   │   ├── file-uploader.tsx
+│   │   │   ├── notification-menu.tsx
+│   │   │   ├── select-component.tsx
+│   │   │   └── user-menu.tsx
+│   │   └── [other components] # Custom components
+│   ├── constants/             # App constants
+│   │   └── eventConstants.ts  # Event-related constants
+│   ├── helpers/               # Utility functions
+│   │   └── sendVerificationEmail.ts # Email utilities
+│   ├── hooks/                 # Custom React hooks
+│   │   └── use-file-upload.ts # File upload hook
+│   ├── lib/                   # Core utilities
+│   │   ├── dbConnect.ts       # MongoDB connection
+│   │   ├── resend.ts          # Email service config
+│   │   ├── supabase.ts        # Supabase config
+│   │   ├── upload.ts          # File upload utilities
+│   │   └── utils.ts           # General utilities
+│   ├── model/                 # MongoDB Mongoose models
+│   │   ├── Booking.model.ts   # Booking schema
+│   │   ├── Event.model.ts     # Event schema
+│   │   └── User.model.ts      # User schema
+│   ├── schemas/               # Zod validation schemas
+│   │   ├── bookingValidationSchema.ts
+│   │   ├── eventValidationSchema.ts
+│   │   ├── loginValidationSchema.ts
 │   │   ├── signupValidationSchema.ts
-│   │   └── eventValidationSchema.ts
-│   └── types/             # TypeScript type definitions
-├── public/                # Static assets
-├── .env.local            # Environment variables
+│   │   ├── updateUserValidationSchema.ts
+│   │   └── verifyValidationSchema.ts
+│   ├── types/                 # TypeScript definitions
+│   │   └── next-auth.d.ts     # NextAuth type extensions
+│   └── middleware.ts          # Next.js middleware
+├── public/                    # Static assets
+├── .env.local                # Environment variables
 ├── package.json
 └── README.md
 ```
