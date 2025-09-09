@@ -122,11 +122,11 @@
 
 ## 📱 Screenshots
 
-### 🏠 Homepage
+### 🏠 Dashboard
 
 <div align="center">
-  <img src="./public/homepage.png" alt="Gatherly Homepage" width="800" />
-  <p><em>Modern landing page with hero section and responsive design</em></p>
+  <img src="./public/homepage.png" alt="Gatherly Dashboard" width="800" />
+  <p><em>Event discovery dashboard with clean, modern interface</em></p>
 </div>
 
 ---
