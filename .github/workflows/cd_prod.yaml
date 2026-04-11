@@ -1,0 +1,23 @@
+name: Deploy to production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  re-deploy:
+    name: Re-deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH into server
+        run: |
+          echo "${{ secrets.SSH_KEY}}" &> ~/ssh_key
+          chmod 600 ~/ssh_key
+          ssh -i ~/ssh_key root@${{ secrets.SERVER_IP}}
+          cd gatherly && git pull
+          npm install
+          npm run build
+          pm2 restart gatherly
+
