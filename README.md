@@ -1,367 +1,391 @@
-# 🎉 Gatherly
+# Gatherly
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Status-In%20Development-yellow?style=for-the-badge" alt="Status" />
-  <img src="https://img.shields.io/badge/Live-gatherly.r2k.dev-blue?style=for-the-badge" alt="Live Demo" />
+  <img src="https://img.shields.io/badge/Next.js-15.3-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" />
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/MongoDB-8.x-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+  <img src="https://img.shields.io/badge/Tailwind%20CSS-4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
 </div>
 
 <div align="center">
-  <h3>🎪 Modern Event Management & Ticketing Platform</h3>
-  <p>A full-stack event management application built with Next.js 14, TypeScript, and MongoDB. Create events, manage bookings, and discover local experiences with a clean, modern interface.</p>
-  <p><strong>🌐 Live Demo:</strong> <a href="https://gatherly.r2k.dev">gatherly.r2k.dev</a></p>
-</div>
-
----
-
-## 📋 Table of Contents
-
-- [🌟 Features](#-features)
-- [🛠️ Tech Stack](#️-tech-stack)
-- [📱 Screenshots](#-screenshots)
-- [🚀 Getting Started](#-getting-started)
-- [📁 Project Structure](#-project-structure)
-- [🔧 API Endpoints](#-api-endpoints)
-- [🌐 Real-World Usage](#-real-world-usage)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
-
----
-
-## 🌟 Features
-
-### 👥 For Attendees
-
-- **Event Discovery**: Browse and discover local events
-- **Secure Booking**: Book tickets with real-time availability and confirmation
-- **User Dashboard**: Manage profile, view booking history, and track events
-- **Clean UI**: Modern, responsive design with shadcn/ui components
-
-### 🎭 For Organizers
-
-- **Event Creation**: Create detailed events with multiple ticket types
-- **Image Upload**: Upload event banners via Supabase integration
-- **Booking Management**: Track ticket sales
-- **Role-based Access**: Organizer-specific features and permissions
-
-### 🔐 Authentication & Security
-
-- **NextAuth Integration**: Secure credential-based authentication
-- **Email Verification**: OTP-based account verification with Resend
-- **Role Management**: Attendee and organizer role separation
-- **Form Validation**: Comprehensive validation with Zod and React Hook Form
-
----
-
-## 📋 Development Status
-
-> **Note**: This is a portfolio project focused on showcasing full-stack development skills and modern web technologies. Some features like notifications are UI-only components to demonstrate interface design.
-
-### ✅ Completed Features
-
-- **Authentication System**: Complete NextAuth setup with credentials provider
-- **User Management**: Registration, login, email verification with Resend
-- **Event Creation**: Full event management with image upload via Supabase
-- **Booking System**: Ticket booking with real-time availability
-- **Database Design**: MongoDB with Mongoose ODM for all models
-- **Form Handling**: React Hook Form integration across all forms
-- **UI Components**: Clean, responsive design with shadcn/ui and Tailwind CSS
-- **Role-based Access**: Organizer vs attendee permissions and routing
-
-### � In Progress
-
-- **Payment Integration**: Stripe/PayPal integration for secure transactions
-- **User Reviews**: Event rating and review system
-- **Ticket Management**: Cancellation and refund functionality
-- **Account Settings**: Password change and profile management
-
-### � UI-Only Features
-
-- **Notification Menu**: Interface component without backend implementation (focus was on core functionality)
-
----
-
-## 🛠️ Tech Stack
-
-### Frontend
-
-<div align="center">
-  <img src="https://img.shields.io/badge/Next.js%2014-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" />
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
-  <img src="https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
-  <img src="https://img.shields.io/badge/shadcn/ui-000000?style=for-the-badge&logo=shadcnui&logoColor=white" alt="shadcn/ui" />
-  <img src="https://img.shields.io/badge/Origin%20UI-FF6B35?style=for-the-badge" alt="Origin UI" />
-</div>
-
-### Backend & Database
-
-<div align="center">
-  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
-  <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
-  <img src="https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logo=mongoose&logoColor=white" alt="Mongoose" />
-</div>
-
-### Authentication & Validation
-
-<div align="center">
-  <img src="https://img.shields.io/badge/NextAuth.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="NextAuth" />
-  <img src="https://img.shields.io/badge/Zod-3E67B1?style=for-the-badge&logo=zod&logoColor=white" alt="Zod" />
-  <img src="https://img.shields.io/badge/bcrypt-8A2BE2?style=for-the-badge" alt="bcrypt" />
-  <img src="https://img.shields.io/badge/React%20Hook%20Form-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white" alt="React Hook Form" />
-</div>
-
-### Cloud Services
-
-<div align="center">
-  <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
-  <img src="https://img.shields.io/badge/Resend-000000?style=for-the-badge&logo=resend&logoColor=white" alt="Resend" />
-  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+  <p>A full-stack event management and ticketing platform</p>
+  <p><strong>Live:</strong> <a href="https://gatherly.r2k.dev">gatherly.r2k.dev</a></p>
 </div>
 
 ---
 
-## 📱 Screenshots
+## Table of Contents
 
-### 🏠 Dashboard
-
-<div align="center">
-  <img src="./public/homepage.png" alt="Gatherly Dashboard" width="800" />
-  <p><em>Event discovery dashboard with clean, modern interface</em></p>
-</div>
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js 18.x or later
-- npm or yarn
-- MongoDB Atlas account
-- Supabase account (for image uploads)
-- Resend account (for email verification)
-
-### Installation
-
-1. **Clone the repository**
-
-   ```bash
-   git clone https://github.com/riteshkrkarn/gatherly.git
-   cd gatherly
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. **Set up environment variables**
-   Create a `.env.local` file in the root directory:
-
-   ```env
-   MONGODB_URL=your_mongodb_atlas_connection_string
-   NEXTAUTH_SECRET=your_nextauth_secret
-   NEXTAUTH_URL=http://localhost:3000
-
-   # Supabase (for image uploads)
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-
-   # Resend (for email verification)
-   RESEND_API_KEY=your_resend_api_key
-
-   # Stripe (for payments - optional)
-   STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
-   STRIPE_SECRET_KEY=your_stripe_secret_key
-   ```
-
-4. **Run the development server**
-
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
-
-5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+- [Tech Stack](#tech-stack)
+- [Architecture Overview](#architecture-overview)
+- [Data Models](#data-models)
+- [Authentication & Middleware](#authentication--middleware)
+- [API Routes](#api-routes)
+- [Validation Layer](#validation-layer)
+- [File Uploads](#file-uploads)
+- [Email System](#email-system)
+- [Project Structure](#project-structure)
+- [Environment Variables](#environment-variables)
+- [Getting Started](#getting-started)
 
 ---
 
-## 📁 Project Structure
+## Tech Stack
+
+| Category | Technology | Version |
+|---|---|---|
+| Framework | Next.js (App Router) | 15.3.3 |
+| Language | TypeScript | ^5 |
+| UI Library | React | ^19.0.0 |
+| Styling | Tailwind CSS | ^4 |
+| UI Primitives | Radix UI + shadcn/ui | Latest |
+| Database | MongoDB (Atlas) | — |
+| ODM | Mongoose | ^8.15.2 |
+| Auth | NextAuth.js | ^4.24.11 |
+| Validation | Zod + React Hook Form | ^3.25 / ^7.62 |
+| Password Hashing | bcryptjs | ^3.0.2 |
+| File Storage | Supabase Storage | ^2.55.0 |
+| Email | Resend + React Email | ^4.6.0 |
+| HTTP Client | Axios | ^1.11.0 |
+| Build Tool | Turbopack (via `next dev --turbopack`) | — |
+
+---
+
+## Architecture Overview
+
+Gatherly is a monolithic Next.js 15 App Router application. There is no separate backend server — API logic lives as [Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/route-handlers) under `src/app/api/`. The frontend and backend share a single process, types, and utility modules.
 
 ```
-gatherly/
-├── src/
-│   ├── app/                    # Next.js 14 App Router
-│   │   ├── (app)/             # Protected app routes
-│   │   │   ├── about/         # About page
-│   │   │   ├── booking-page/  # Ticket booking pages
-│   │   │   ├── create-event/  # Event creation (organizers)
-│   │   │   ├── dashboard/     # Main dashboard
-│   │   │   ├── events/        # Event detail pages
-│   │   │   ├── my-events/     # User's events/bookings
-│   │   │   ├── profile-page/  # User profile
-│   │   │   └── update-user/   # Profile update
-│   │   ├── (auth)/            # Authentication routes
-│   │   │   ├── sign-in/       # Login page
-│   │   │   ├── sign-up/       # Registration page
-│   │   │   └── verify-code/   # Email verification
-│   │   ├── api/               # API routes
-│   │   │   ├── auth/          # Authentication APIs
-│   │   │   ├── book-ticket/   # Booking APIs
-│   │   │   ├── check-username-unique/ # Username validation
-│   │   │   ├── create-event/  # Event creation API
-│   │   │   ├── events/        # Event-related APIs
-│   │   │   ├── get-events/    # Event listing API
-│   │   │   ├── get-my-events/ # User events API
-│   │   │   ├── get-user/      # User data API
-│   │   │   ├── update-user/   # User update API
-│   │   │   └── verify-code/   # Email verification API
-│   │   ├── favicon.ico        # App favicon
-│   │   ├── globals.css        # Global styles
-│   │   ├── layout.tsx         # Root layout
-│   │   └── page.tsx           # Homepage
-│   ├── components/            # Reusable components
-│   │   ├── providers/         # Context providers
-│   │   ├── ui/               # shadcn/ui & Origin UI components
-│   │   │   ├── file-uploader.tsx
-│   │   │   ├── notification-menu.tsx
-│   │   │   ├── select-component.tsx
-│   │   │   └── user-menu.tsx
-│   │   └── [other components] # Custom components
-│   ├── constants/             # App constants
-│   │   └── eventConstants.ts  # Event-related constants
-│   ├── helpers/               # Utility functions
-│   │   └── sendVerificationEmail.ts # Email utilities
-│   ├── hooks/                 # Custom React hooks
-│   │   └── use-file-upload.ts # File upload hook
-│   ├── lib/                   # Core utilities
-│   │   ├── dbConnect.ts       # MongoDB connection
-│   │   ├── resend.ts          # Email service config
-│   │   ├── supabase.ts        # Supabase config
-│   │   ├── upload.ts          # File upload utilities
-│   │   └── utils.ts           # General utilities
-│   ├── model/                 # MongoDB Mongoose models
-│   │   ├── Booking.model.ts   # Booking schema
-│   │   ├── Event.model.ts     # Event schema
-│   │   └── User.model.ts      # User schema
-│   ├── schemas/               # Zod validation schemas
-│   │   ├── bookingValidationSchema.ts
-│   │   ├── eventValidationSchema.ts
-│   │   ├── loginValidationSchema.ts
-│   │   ├── signupValidationSchema.ts
-│   │   ├── updateUserValidationSchema.ts
-│   │   └── verifyValidationSchema.ts
-│   ├── types/                 # TypeScript definitions
-│   │   └── next-auth.d.ts     # NextAuth type extensions
-│   └── middleware.ts          # Next.js middleware
-├── public/                    # Static assets
-├── .env.local                # Environment variables
-├── package.json
-└── README.md
+Browser → Next.js App Router
+                ├── Server Components   (data fetching, SEO)
+                ├── Client Components   (interactivity, forms)
+                └── Route Handlers      (API endpoints, DB access)
+                          └── MongoDB (via Mongoose ODM)
 ```
+
+**Key design decisions:**
+- **App Router only** — no Pages Router. Layouts, loading states, and error boundaries are handled natively.
+- **Turbopack** is used for local development (`next dev --turbopack`) for significantly faster HMR.
+- **Route groups** separate authenticated app routes `(app)/` from public auth routes `(auth)/`.
+- **Middleware** enforces authentication and role-based access at the edge before a request reaches any route handler.
+- **Singleton DB connection** — `dbConnect.ts` uses a module-level `connection` object to prevent multiple Mongoose connections during hot reload in development.
 
 ---
 
-## 🔧 API Endpoints
+## Data Models
 
-### Authentication
+All models are defined with Mongoose and typed via TypeScript interfaces extending `mongoose.Document`.
 
-- `POST /api/auth/sign-up` - User registration
-- `POST /api/verify-code` - Email verification
-- `GET /api/check-username-unique` - Check username availability
+### User
+
+```ts
+interface User extends Document {
+  name: string;
+  email: string;           // unique, lowercase
+  username: string;        // unique, trimmed
+  isOrganizer: boolean;    // role flag — drives access control
+  avatar: string;          // Supabase Storage URL
+  password: string;        // bcryptjs hashed
+  verifyCode: string;      // OTP for email verification
+  verifyCodeExpiry: Date;  // OTP TTL
+  isVerified: boolean;
+  createdAt?: Date;
+}
+```
+
+### Event
+
+```ts
+interface Event extends Document {
+  organizer: Types.ObjectId;  // ref → User
+  name: string;
+  tagline: string;
+  description: string;
+  category: string;
+  location: string;
+  image: string;              // Supabase Storage URL
+  dateCreated: Date;
+  dateStarted: Date;
+  dateEnded: Date;
+  status: EventStatus;        // enum: EVENT_STATUSES constant
+  ticketTypes: {
+    name: string;
+    price: number;
+    quantity: number;
+  }[];
+}
+```
+
+> `EventStatus` and `EVENT_STATUSES` are defined in `src/constants/eventConstants.ts` and used in both the Mongoose schema enum and frontend rendering logic.
+
+### Booking
+
+Defined in `src/model/Booking.model.ts` — references both `User` and `Event` via `ObjectId` refs.
+
+---
+
+## Authentication & Middleware
+
+### NextAuth (Credentials Provider)
+
+Authentication uses **NextAuth.js v4** with a custom credentials provider. JWT sessions are used (no database adapter). Session data is extended to include `isOrganizer` and `username` via TypeScript declaration merging in `src/types/next-auth.d.ts`.
+
+### Email Verification Flow
+
+1. On sign-up, a random 6-digit `verifyCode` and `verifyCodeExpiry` are generated and stored on the User document.
+2. A verification email is sent via **Resend** using a **React Email** template (`emails/` directory).
+3. The user submits the OTP at `/verify-code`, which hits `POST /api/verify-code` to validate the code against `verifyCodeExpiry`.
+4. On success, `isVerified` is set to `true`.
+
+### Middleware — Route Protection
+
+`src/middleware.ts` uses NextAuth's `getToken()` to read the JWT from the incoming request and applies three layers of protection:
+
+```
+Request
+  │
+  ├── /api/auth/* → Always allowed (NextAuth internals)
+  │
+  ├── /sign-in, /sign-up, /verify → Redirect to /dashboard if already authenticated
+  │
+  ├── Protected routes (/dashboard, /events, /booking-page, etc.)
+  │       └── No token → Redirect to /sign-in
+  │
+  └── Organizer routes (/create-event)
+          ├── No token → Redirect to /sign-in
+          └── token.isOrganizer === false → Redirect to /dashboard
+```
+
+The `config.matcher` array explicitly lists all paths the middleware runs on to avoid unnecessary edge function executions.
+
+---
+
+## API Routes
+
+All routes are defined under `src/app/api/` as Next.js Route Handlers.
+
+### Auth
+
+| Method | Path | Description |
+|---|---|---|
+| `POST` | `/api/auth/sign-up` | Register user, hash password, send OTP email |
+| `POST` | `/api/verify-code` | Validate OTP, mark user as verified |
+| `GET` | `/api/check-username-unique` | Query DB for username uniqueness (debounced on frontend) |
 
 ### Events
 
-- `GET /api/get-events` - Get all events with pagination
-- `GET /api/events/[id]` - Get single event details
-- `POST /api/create-event` - Create new event (organizers only)
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/api/get-events` | Paginated list of all events |
+| `GET` | `/api/events/[id]` | Single event by MongoDB `_id` |
+| `POST` | `/api/create-event` | Create event (organizer only, validated via session) |
 
 ### Bookings
 
-- `POST /api/book-ticket/[id]` - Book event tickets
+| Method | Path | Description |
+|---|---|---|
+| `POST` | `/api/book-ticket/[id]` | Book tickets for an event |
 
 ### Users
 
-- `POST /api/update-user` - Update user profile
-
-## 🌐 Real-World Usage
-
-### 🎭 Event Organizers
-
-- **Local Businesses**: Restaurants hosting wine tastings, cafes organizing book clubs
-- **Educational Institutions**: Universities hosting seminars, workshops, and conferences
-- **Community Groups**: Local clubs organizing meetups, charity events, and fundraisers
-- **Entertainment Venues**: Concert halls, theaters, and comedy clubs selling tickets
-
-### 🎪 Event Attendees
-
-- **Professionals**: Finding networking events, conferences, and skill-building workshops
-- **Students**: Discovering educational seminars, career fairs, and campus events
-- **Families**: Finding family-friendly activities, festivals, and community events
-- **Enthusiasts**: Booking tickets for hobby-related events, sports, and entertainment
-
-### 💼 Business Applications
-
-- **Corporate Events**: Company meetings, team building activities, and product launches
-- **Non-profits**: Fundraising events, awareness campaigns, and volunteer activities
-- **Government**: Public meetings, town halls, and community engagement events
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/api/get-user` | Fetch authenticated user's data |
+| `GET` | `/api/get-my-events` | Fetch events/bookings associated with the session user |
+| `POST` | `/api/update-user` | Update user profile fields |
 
 ---
 
-## 🤝 Contributing
+## Validation Layer
 
-This is a portfolio project for showcasing full-stack development skills and learning modern web technologies. Contributions are welcome!
+Validation is done **at two levels**:
 
-### Ways to Contribute
+1. **Client-side** — React Hook Form + Zod resolvers (`@hookform/resolvers/zod`) on every form. Errors are shown inline before any network request is made.
 
-1. **Bug Reports**: Found a bug? Open an issue with detailed information
-2. **Feature Requests**: Have an idea? Create a feature request
-3. **Code Contributions**: Fork the repo and submit a pull request
-4. **Documentation**: Help improve the documentation
+2. **Server-side** — Zod schemas are re-evaluated inside Route Handlers to prevent bypassed client validation.
 
-### Development Guidelines
+Schemas live in `src/schemas/`:
 
-1. Follow TypeScript best practices
-2. Use the established project structure
-3. Write descriptive commit messages
-4. Test your changes thoroughly
-5. Update documentation as needed
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+| File | Validates |
+|---|---|
+| `signupValidationSchema.ts` | Registration form fields |
+| `loginValidationSchema.ts` | Login credentials |
+| `verifyValidationSchema.ts` | OTP code format |
+| `eventValidationSchema.ts` | Full event creation payload |
+| `bookingValidationSchema.ts` | Ticket booking request |
+| `updateUserValidationSchema.ts` | Profile update fields |
 
 ---
 
-## 🙏 Acknowledgments
+## File Uploads
 
-- **Next.js Team** for the amazing framework
-- **Vercel** for hosting and deployment
-- **MongoDB** for the database solution
-- **shadcn/ui** for the beautiful UI components
-- **Open Source Community** for the incredible tools and libraries
+Event banner images are uploaded directly to **Supabase Storage** (not stored in MongoDB).
 
----
-
-<div align="center">
-  <p>⭐ Star this repository if you find it helpful!</p>
-</div>
+- The upload is handled client-side via a custom `useFileUpload` hook (`src/hooks/use-file-upload.ts`) and a `FileUploader` component.
+- `src/lib/upload.ts` wraps the Supabase JS client for bucket operations.
+- The resulting public URL is stored as a string (`image` field) on the `Event` document.
+- Supabase is initialized in `src/lib/supabase.ts` using both the anon key (client-side) and service role key (server-side operations).
 
 ---
 
-## 📞 Contact
+## Email System
 
-- **X**: [riteshkrkarn](https://x.com/riteshkrkarn)
-- **LinkedIn**: [riteshkrkarn](https://linkedin.com/in/riteshkrkarn)
+Transactional emails are sent via **Resend** using **React Email** components:
+
+```
+src/
+└── emails/                         # React Email templates
+src/helpers/sendVerificationEmail.ts # Resend API wrapper
+src/lib/resend.ts                   # Resend client initialization
+```
+
+The OTP verification email is a React component rendered to HTML server-side by Resend's SDK before dispatch. This keeps email templates type-safe and version-controlled.
 
 ---
 
-_This project is actively being developed. Check back for updates and new features!_
+## Project Structure
+
+```
+gatherly/
+├── emails/                        # React Email templates
+├── public/                        # Static assets
+└── src/
+    ├── app/
+    │   ├── (app)/                 # Protected routes (require auth)
+    │   │   ├── about/
+    │   │   ├── booking-page/
+    │   │   ├── create-event/      # Organizer-only
+    │   │   ├── dashboard/
+    │   │   ├── events/[id]/
+    │   │   ├── my-events/
+    │   │   ├── profile-page/
+    │   │   └── update-user/
+    │   ├── (auth)/                # Public auth routes
+    │   │   ├── sign-in/
+    │   │   ├── sign-up/
+    │   │   └── verify-code/
+    │   ├── api/                   # Route Handlers (backend logic)
+    │   │   ├── auth/
+    │   │   ├── book-ticket/[id]/
+    │   │   ├── check-username-unique/
+    │   │   ├── create-event/
+    │   │   ├── events/[id]/
+    │   │   ├── get-events/
+    │   │   ├── get-my-events/
+    │   │   ├── get-user/
+    │   │   ├── update-user/
+    │   │   └── verify-code/
+    │   ├── globals.css
+    │   ├── layout.tsx             # Root layout with SessionProvider
+    │   └── page.tsx               # Public homepage
+    ├── components/
+    │   ├── providers/             # SessionProvider wrapper
+    │   └── ui/                    # shadcn/ui + custom components
+    ├── constants/
+    │   └── eventConstants.ts      # EventStatus enum & array
+    ├── helpers/
+    │   └── sendVerificationEmail.ts
+    ├── hooks/
+    │   └── use-file-upload.ts
+    ├── lib/
+    │   ├── dbConnect.ts           # Mongoose singleton connection
+    │   ├── resend.ts
+    │   ├── supabase.ts
+    │   ├── upload.ts
+    │   └── utils.ts               # cn() helper (clsx + tailwind-merge)
+    ├── model/
+    │   ├── Booking.model.ts
+    │   ├── Event.model.ts
+    │   └── User.model.ts
+    ├── schemas/                   # Zod validation schemas
+    ├── types/
+    │   └── next-auth.d.ts         # Session type augmentation
+    └── middleware.ts              # Edge auth + RBAC
+```
+
+---
+
+## Environment Variables
+
+Create a `.env.local` in the project root:
+
+```env
+# MongoDB
+MONGODB_URL=mongodb+srv://<user>:<password>@cluster.mongodb.net/<db>
+
+# NextAuth
+NEXTAUTH_SECRET=<random-secret>
+NEXTAUTH_URL=http://localhost:3000
+SECRET=<same-or-different-jwt-secret>   # used in middleware getToken()
+
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://<project>.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon-key>
+SUPABASE_SERVICE_ROLE_KEY=<service-role-key>
+
+# Resend
+RESEND_API_KEY=re_<key>
+
+# Stripe (not yet implemented)
+STRIPE_PUBLISHABLE_KEY=pk_...
+STRIPE_SECRET_KEY=sk_...
+```
+
+> **Note:** `NEXT_PUBLIC_` prefixed variables are exposed to the browser bundle. Never prefix secrets (service role key, Resend key, Stripe secret) with `NEXT_PUBLIC_`.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- MongoDB Atlas cluster
+- Supabase project with a storage bucket
+- Resend account with a verified sending domain
+
+### Installation
+
+```bash
+git clone https://github.com/riteshkrkarn/gatherly.git
+cd gatherly
+npm install
+```
+
+Copy the environment variable template above into `.env.local` and fill in your values.
+
+```bash
+npm run dev        # Turbopack dev server → http://localhost:3000
+npm run build      # Production build
+npm run lint       # ESLint
+```
+
+---
+
+## Development Status
+
+| Area | Status |
+|---|---|
+| Auth (register, login, OTP verify) | ✅ Complete |
+| Role-based middleware (attendee / organizer) | ✅ Complete |
+| Event creation with image upload | ✅ Complete |
+| Ticket booking with availability tracking | ✅ Complete |
+| User profile management | ✅ Complete |
+| Payment integration (Stripe) | 🔧 In Progress |
+| Event reviews & ratings | 🔧 In Progress |
+| Ticket cancellation & refunds | 🔧 In Progress |
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE).
+
+---
+
+<p align="center">
+  <a href="https://x.com/riteshkrkarn">X</a> ·
+  <a href="https://linkedin.com/in/riteshkrkarn">LinkedIn</a> ·
+  <a href="https://gatherly.r2k.dev">Live Demo</a>
+</p>
