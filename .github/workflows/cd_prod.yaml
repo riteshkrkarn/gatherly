@@ -11,13 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: SSH into server
-        run: |
-          echo "${{ secrets.SSH_KEY}}" &> ~/ssh_key
-          chmod 600 ~/ssh_key
-          ssh -i ~/ssh_key root@${{ secrets.SERVER_IP}}
-          cd gatherly && git pull
-          npm install
-          npm run build
-          pm2 restart gatherly
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd gatherly && git pull
+            npm install
+            npm run build
+            pm2 restart gatherly
 
