@@ -39,9 +39,12 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
           chmod 600 ~/ssh_key
           ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@${{ secrets.SERVER_IP }} << 'EOF'
-            # Stop and remove the old container (if it exists)
+            # Stop and remove the old container
             sudo docker stop gatherly || true
             sudo docker rm gatherly || true
+            
+            # Safe cleanup: remove old unused images and data
+            sudo docker system prune -af
             
             # Pull the latest image
             sudo docker pull riteshkrkarn/gatherly:latest
