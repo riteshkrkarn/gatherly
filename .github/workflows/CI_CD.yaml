@@ -38,7 +38,7 @@ jobs:
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
           chmod 600 ~/ssh_key
-          ssh -o StrictHostKeyChecking=no -i ~/ssh_key root@64.227.147.124 << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i ~/ssh_key root@${{ secrets.SERVER_IP }} << 'EOF'
             # Stop and remove the old container (if it exists)
             docker stop gatherly || true
             docker rm gatherly || true
