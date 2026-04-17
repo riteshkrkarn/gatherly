@@ -1,3 +1,4 @@
+// Production bypass for image optimization to save resources on small VMs
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
