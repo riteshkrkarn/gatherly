@@ -40,14 +40,14 @@ jobs:
           chmod 600 ~/ssh_key
           ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@${{ secrets.SERVER_IP }} << 'EOF'
             # Stop and remove the old container (if it exists)
-            docker stop gatherly || true
-            docker rm gatherly || true
+            sudo docker stop gatherly || true
+            sudo docker rm gatherly || true
             
             # Pull the latest image
-            docker pull riteshkrkarn/gatherly:latest
+            sudo docker pull riteshkrkarn/gatherly:latest
             
             # Run the new container with all environment variables
-            docker run -d \
+            sudo docker run -d \
               --name gatherly \
               -p 3000:3000 \
               -e NEXT_PUBLIC_SUPABASE_URL="${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" \
