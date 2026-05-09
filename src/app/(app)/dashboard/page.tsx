@@ -10,7 +10,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import axios from "axios";
+import dbConnect from "@/lib/dbConnect";
+import EventModel from "@/model/Event.model";
 
 interface PageProps {
   searchParams: Promise<{ page?: string }>;
@@ -38,19 +39,34 @@ interface ApiResponse {
 
 async function getEvents(page: number = 1): Promise<ApiResponse> {
   try {
-    const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
-    const data = await axios.get(
-      `${baseUrl}/api/get-events?page=${page}&limit=12`
-    );
+    await dbConnect();
 
-    if (!data.status || data.status >= 400) {
-      throw new Error(`Failed to fetch events: ${data.status}`);
-    }
+    const limit = 12;
+    const skip = (page - 1) * limit;
 
-    return data.data;
+    const total = await EventModel.countDocuments({ status: "open" });
+
+    const events = await EventModel.find({ status: "open" })
+      .select("name description location image")
+      .sort({ dateStarted: 1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      events: events as unknown as Event[],
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalEvents: total,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
+    };
   } catch (error) {
     console.error("Error fetching events:", error);
-    // Return empty data structure when API fails
     return {
       events: [],
       pagination: {
